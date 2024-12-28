@@ -1,4 +1,4 @@
-const CategoryServices = require("../services/Category_services");
+const CategoryServices = require("../services/category_services");
 const parseHelper = require("../helpers/response_helper");
 
 const create = async (req, res) => {
