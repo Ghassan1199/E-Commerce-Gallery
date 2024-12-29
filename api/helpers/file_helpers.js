@@ -39,8 +39,7 @@ const saveFileToCloudinary = async (file_path) => {
 
 
 const deleteFileFromCloudinary = async (public_id) => {
-    const result = await cloudinary.api.delete_resources(extractPublicId(public_id));
-    console.log(result);
+    await cloudinary.api.delete_resources(extractPublicId(public_id));
 }
 
 

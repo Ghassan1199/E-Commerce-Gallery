@@ -20,13 +20,13 @@ const login = async (req, res) => {
     try {
         const {user_name, password} = req.body;
         const user = await UserServices.login(user_name, password);
-        return parseHelper(res, 200, user, "returned successfully");
+        return parseHelper(res, 200, user, "Logged In successfully");
     } catch (err) {
         if (err.message === "User does not exist")
             return parseHelper(res, 404, null, err.message);
 
         if (err.message === "Invalid credentials")
-            return parseHelper(res, 403, null, err.message);
+            return parseHelper(res, 401, null, err.message);
 
         console.log(err)
         return parseHelper(res, 500, null, err);
