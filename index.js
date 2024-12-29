@@ -7,16 +7,23 @@ const morgan = require('morgan');
 const {connectDB} = require('./api/models/index'); // Import the connection function
 const router = require('./api/routes/index');
 
+
 const app = express();
 
 
 const port = process.env.PORT|| 3000
+
+const fs = require('fs');
+const path = require('path');
+const busboy = require('busboy');
+
 
 
 app.listen(port,()=>{
     console.log(`connected to localhost:${port}`);
     connectDB();
 });
+
 
 
 

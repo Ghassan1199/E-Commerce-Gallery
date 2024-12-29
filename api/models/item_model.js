@@ -5,21 +5,33 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    price:{
+
+    price: {
         type: Number,
     },
+
     description: {
         type: String,
+    },
+
+    images: {
+        type: [String],
+    },
+
+    main_category_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+    },
+
+    sub_category_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'sub_category',
     },
     createdAt: {
         type: Date,
         default: Date.now,
     },
-    sub_category_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'sub_category',
-        required: true,
-    }
+
 }, {
     toJSON: {
         transform: function (doc, ret) {

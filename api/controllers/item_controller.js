@@ -3,10 +3,11 @@ const parseHelper = require("../helpers/response_helper");
 
 const create = async (req, res) => {
     try {
-        const {name, description, sub_category_id} = req.body;
-        const item = await ItemServices.create(name, description, sub_category_id);
+        const {name, description, sub_category_id, main_category_id, files} = req.body;
+        const item = await ItemServices.create(name, description, files, sub_category_id, main_category_id);
         return parseHelper(res, 201, item, "created successfully");
     } catch (err) {
+        console.log(err);
         return parseHelper(res, 400, null, err);
     }
 }
@@ -23,7 +24,18 @@ const index = async (req, res) => {
     }
 }
 
+const remove = async (req, res) => {
+    try {
+        const items = await ItemServices.remove(req.params.id);
+        return parseHelper(res, 204, items, "deleted successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
 module.exports = {
     create,
-    index
+    index,
+    remove,
 };
