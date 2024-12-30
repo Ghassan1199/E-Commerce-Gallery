@@ -1,10 +1,10 @@
 const itemModel = require('../models/item_model');
-const {saveFileToCloudinary, uploadPath,deleteFileFromCloudinary} = require("../helpers/file_helpers");
+const {saveFileToCloudinary, uploadPath, deleteFileFromCloudinary} = require("../helpers/file_helpers");
 const path = require("path");
 const ItemModel = require("../models/item_model");
 
-const create = async (name, description, price,images, sub_category_id, main_category_id) => {
-    const item = await new itemModel({ name,price,description, sub_category_id, main_category_id});
+const create = async (name, description, price, images, sub_category_id, main_category_id) => {
+    const item = await new itemModel({name, price, description, sub_category_id, main_category_id});
 
     for (const image in images) {
         const url = await saveFileToCloudinary(path.join(uploadPath, images[image].fileName));
@@ -22,11 +22,17 @@ const index = async () => {
 
 const remove = async (id) => {
     const item = await ItemModel.findByIdAndDelete(id);
-    if(!item) throw new Error("Item not found");
-    for (const image of item.images){
+    if (!item) throw new Error("Item not found");
+    for (const image of item.images) {
         await deleteFileFromCloudinary(image);
     }
     return item;
+}
+
+const getById = async (id) => {
+    return ItemModel.findById(id)
+        .populate('main_category_id')
+        .populate('sub_category_id');
 }
 
 
@@ -69,5 +75,6 @@ module.exports = {
     create,
     index,
     remove,
-    update
+    update,
+    getById
 };

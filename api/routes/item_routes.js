@@ -6,7 +6,7 @@ const itemRouter = express.Router();
 
 itemRouter.post('/', busboy.bus, ItemController.create);
 itemRouter.get("/", ItemController.index)
+itemRouter.get("/:id", ItemController.get);
 itemRouter.delete("/:id", ItemController.remove);
-itemRouter.put("/:id", busboy.bus,ItemController.update);
-
+itemRouter.put("/:id", busboy.bus, ItemController.update);
 module.exports = itemRouter;
