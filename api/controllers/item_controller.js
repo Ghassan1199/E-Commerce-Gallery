@@ -34,8 +34,20 @@ const remove = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const {name, description, price, sub_category_id, main_category_id, files} = req.body;
+        const item = await ItemServices.update(req.params.id, name, description, price, files, sub_category_id, main_category_id);
+        return parseHelper(res, 200, item, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+};
+
 module.exports = {
     create,
     index,
     remove,
+    update
 };

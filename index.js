@@ -4,19 +4,13 @@ const bodyParser = require('body-parser')
 const dotenv = require('dotenv');
 dotenv.config();
 const morgan = require('morgan');
-const {connectDB} = require('./api/models/index'); // Import the connection function
+const {connectDB} = require('./api/models/index');
 const router = require('./api/routes/index');
-
 
 const app = express();
 
 
 const port = process.env.PORT|| 3000
-
-const fs = require('fs');
-const path = require('path');
-const busboy = require('busboy');
-
 
 
 app.listen(port,()=>{
@@ -32,6 +26,5 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(morgan('dev'))
-
 
 app.use(router);

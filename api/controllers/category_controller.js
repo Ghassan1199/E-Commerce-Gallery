@@ -24,7 +24,33 @@ const index = async (req, res) => {
 
 }
 
+const remove = async (req, res) => {
+    try {
+        const category = await CategoryServices.remove(req.params.id);
+        return parseHelper(res, 204, category, "deleted successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
+const update = async (req, res) => {
+    try {
+        const name = req.body.name;
+        const description = req.body.description;
+
+        const category = await CategoryServices.update(req.params.id,name, description);
+        return parseHelper(res, 200, category, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
+
 module.exports = {
     create,
-    index
+    index,
+    remove,
+    update
 };

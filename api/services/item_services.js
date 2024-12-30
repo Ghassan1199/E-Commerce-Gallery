@@ -29,8 +29,45 @@ const remove = async (id) => {
     return item;
 }
 
+
+const update = async (id, name, description, price, images, sub_category_id, main_category_id) => {
+    // Find the item by ID
+    const item = await itemModel.findById(id);
+    if (!item) throw new Error("Item not found");
+
+    // Update the fields of the item
+    item.name = name || item.name;
+    item.description = description || item.description;
+    item.price = price || item.price;
+    item.sub_category_id = sub_category_id || item.sub_category_id;
+    item.main_category_id = main_category_id || item.main_category_id;
+
+    // Handle image updates
+    if (images && images.length > 0) {
+        // Delete old images from Cloudinary
+        for (const image of item.images) {
+            await deleteFileFromCloudinary(image);
+        }
+
+        // Clear the old images array
+        item.images = [];
+
+        // Add new images
+        for (const image of images) {
+            const url = await saveFileToCloudinary(path.join(uploadPath, image.fileName));
+            item.images.push(url);
+        }
+    }
+
+    // Save the updated item
+    await item.save();
+
+    return item;
+};
+
 module.exports = {
     create,
     index,
     remove,
+    update
 };

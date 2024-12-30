@@ -11,7 +11,22 @@ const index = async () => {
     return Categories;
 }
 
+const remove = async (id) => {
+    const category = await CategoryModel.findByIdAndDelete(id);
+    if(!category) throw new Error("Category not found");
+    return category;
+}
+
+
+const update = async (id, name, description) => {
+    const category = await CategoryModel.findByIdAndUpdate(id, { name, description }, { new: true });
+    if (!category) throw new Error("Category not found");
+    return category;
+}
+
 module.exports = {
     create,
-    index
+    index,
+    remove,
+    update
 };

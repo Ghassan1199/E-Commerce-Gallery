@@ -9,8 +9,26 @@ const create = async (name, description, main_category_id) => {
 const index = async () => {
     return SubCategoryModel.find().populate("main_category_id");
 }
+const remove = async (id) => {
+    const subCategory = await SubCategoryModel.findByIdAndDelete(id);
+    if (!subCategory) throw new Error("SubCategory not found");
+    return subCategory;
+}
+
+const update = async (id, name, description, main_category_id) => {
+    const subCategory = await SubCategoryModel.findByIdAndUpdate(id, {
+        name,
+        description,
+        main_category_id
+    }, {new: true});
+    if (!subCategory) throw new Error("SubCategory not found");
+    return subCategory;
+}
+
 
 module.exports = {
     create,
-    index
+    index,
+    remove,
+    update
 };

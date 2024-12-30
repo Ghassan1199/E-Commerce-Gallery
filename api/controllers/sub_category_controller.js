@@ -23,7 +23,35 @@ const index = async (req, res) => {
     }
 }
 
+const remove = async (req, res) => {
+    try {
+        const subCategory = await SubCategoryServices.remove(req.params.id);
+        return parseHelper(res, 204, subCategory, "deleted successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
+const update = async (req, res) => {
+    try {
+
+        const name = req.body.name;
+        const description = req.body.description;
+        const main_category_id = req.body.main_category_id;
+
+        const subCategory = await SubCategoryServices.update(req.params.id, name, description, main_category_id);
+        return parseHelper(res, 200, subCategory, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
+
 module.exports = {
     create,
-    index
+    index,
+    remove,
+    update
 };
