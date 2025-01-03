@@ -14,11 +14,27 @@ const create = async (name, description, price, images, sub_category_id, main_ca
     return item;
 }
 
-const index = async () => {
-    return itemModel.find()
+const index = async (main_category_id, sub_category_id, max_price, min_price) => {
+    // Build the filter object
+    const filter = {};
+
+    if (main_category_id) {
+        filter.main_category_id = main_category_id;
+    }
+    if (sub_category_id) {
+        filter.sub_category_id = sub_category_id;
+    }
+    if (max_price) {
+        filter.price = { ...filter.price, $lte: max_price };
+    }
+    if (min_price) {
+        filter.price = { ...filter.price, $gte: min_price };
+    }
+
+    return itemModel.find(filter)
         .populate('main_category_id')
         .populate('sub_category_id');
-}
+};
 
 const remove = async (id) => {
     const item = await ItemModel.findByIdAndDelete(id);

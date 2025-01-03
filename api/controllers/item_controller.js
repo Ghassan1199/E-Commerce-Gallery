@@ -14,7 +14,8 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
     try {
-        const items = await ItemServices.index();
+        const {main_category_id, sub_category_id, max_price, min_price} = req.query;
+        const items = await ItemServices.index(main_category_id, sub_category_id, max_price, min_price);
         if (!items.length) throw new Error("There is no items yet");
         return parseHelper(res, 200, items, "returned successfully");
     } catch (err) {
