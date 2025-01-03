@@ -52,7 +52,7 @@ const getById = async (id) => {
 }
 
 
-const update = async (id, name, description, price, images, sub_category_id, main_category_id) => {
+const update = async (id, name, description, price,discount, images, sub_category_id, main_category_id) => {
     // Find the item by ID
     const item = await itemModel.findById(id);
     if (!item) throw new Error("Item not found");
@@ -63,6 +63,7 @@ const update = async (id, name, description, price, images, sub_category_id, mai
     item.price = price || item.price;
     item.sub_category_id = sub_category_id || item.sub_category_id;
     item.main_category_id = main_category_id || item.main_category_id;
+    item.discount = discount || item.discount;
 
     // Handle image updates
     if (images && images.length > 0) {
