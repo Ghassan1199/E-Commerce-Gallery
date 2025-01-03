@@ -65,7 +65,6 @@ const update = async (id, name, description, price, images, sub_category_id, mai
         }
     }
 
-    // Save the updated item
     await item.save();
 
     return item;
