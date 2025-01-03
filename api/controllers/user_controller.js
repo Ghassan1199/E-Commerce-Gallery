@@ -51,7 +51,7 @@ const update = async (req, res) => {
         const {id} = req.params;
 
         const user = await UserServices.update(id, password, role);
-        if(!user) throw new Error("User does not exist");
+        if (!user) throw new Error("User does not exist");
         return parseHelper(res, 200, user, "updated successfully");
     } catch (err) {
         if (err.message === 'User does not exist')
@@ -66,8 +66,8 @@ const remove = async (req, res) => {
     try {
         const {id} = req.params;
         const user = await UserServices.remove(id);
-            if(!user) throw new Error("User does not exist");
-        return parseHelper(res, 200, user, "removed successfully");
+        if (!user) throw new Error("User does not exist");
+        return parseHelper(res, 204, user, "removed successfully");
 
     } catch (err) {
         if (err.message === 'User does not exist')
