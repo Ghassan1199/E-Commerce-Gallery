@@ -14,8 +14,8 @@ const create = async (name, description, price, images, sub_category_id, main_ca
     return item;
 }
 
-const index = async (main_category_id, sub_category_id, max_price, min_price) => {
-    // Build the filter object
+const index = async (main_category_id, sub_category_id, max_price, min_price,cursor,limit) => {
+
     const filter = {};
 
     if (main_category_id) {
@@ -30,8 +30,12 @@ const index = async (main_category_id, sub_category_id, max_price, min_price) =>
     if (min_price) {
         filter.price = { ...filter.price, $gte: min_price };
     }
+    if (cursor) {
+        filter._id = { $gt: cursor };
+    }
 
     return itemModel.find(filter)
+        .limit(limit)
         .populate('main_category_id')
         .populate('sub_category_id');
 };

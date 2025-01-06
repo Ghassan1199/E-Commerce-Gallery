@@ -14,14 +14,15 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
     try {
-        const {main_category_id, sub_category_id, max_price, min_price} = req.query;
-        const items = await ItemServices.index(main_category_id, sub_category_id, max_price, min_price);
-        if (!items.length) throw new Error("There is no items yet");
-        return parseHelper(res, 200, items, "returned successfully");
+        const {main_category_id, sub_category_id, max_price, min_price, cursor, limit} = req.query;
+        const items = await ItemServices.index(main_category_id, sub_category_id, max_price, min_price, cursor, limit);
+        if (!items.length) throw new Error("There is no items found");
+        return parseHelper(res, 200, {items: items, cursor: items[items.length - 1]._id}, "returned successfully");
     } catch (err) {
-        if (err.message === "There is no items yet")
+        if (err.message === "There is no items found")
             return parseHelper(res, 404, null, err.message);
-        return parseHelper(res, 400, null, err);
+        console.log(err);
+        return parseHelper(res, 500, null, err);
     }
 }
 
@@ -37,8 +38,8 @@ const remove = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const {name, description, price,discount, sub_category_id, main_category_id, files} = req.body;
-        const item = await ItemServices.update(req.params.id, name, description, price,discount, files, sub_category_id, main_category_id);
+        const {name, description, price, discount, sub_category_id, main_category_id, files} = req.body;
+        const item = await ItemServices.update(req.params.id, name, description, price, discount, files, sub_category_id, main_category_id);
         return parseHelper(res, 200, item, "updated successfully");
     } catch (err) {
         console.log(err);
@@ -47,14 +48,14 @@ const update = async (req, res) => {
 };
 
 const get = async (req, res) => {
-    try{
+    try {
         const id = req.params.id;
         const item = await ItemServices.getById(id);
-        if(!item) throw new Error("item not found");
+        if (!item) throw new Error("item not found");
         return parseHelper(res, 200, item, "returned successfully");
-    }catch (err){
+    } catch (err) {
         console.log(err);
-        if(err.message === "item not found")
+        if (err.message === "item not found")
             return parseHelper(res, 404, null, err.message);
         return parseHelper(res, 400, null, err);
     }

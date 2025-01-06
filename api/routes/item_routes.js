@@ -84,7 +84,7 @@ const itemRouter = express.Router();
  *               type: object
  *               properties:
  *                 id:
- *                   type: string
+ *                   type: Mongoose ObjectId
  *                 name:
  *                   type: string
  *                 description:
@@ -101,24 +101,23 @@ const itemRouter = express.Router();
  */
 itemRouter.post('/', busboy.bus, ItemController.create);
 
-
 /**
  * @openapi
  * /item:
  *   get:
- *     summary: Get a list of items
+ *     summary: Get a list of items with optional filters and pagination
  *     tags: [Item]
  *     parameters:
  *       - name: main_category_id
  *         in: query
  *         description: The ID of the main category
  *         schema:
- *           type: string
+ *           type: Mongoose ObjectId
  *       - name: sub_category_id
  *         in: query
  *         description: The ID of the sub category
  *         schema:
- *           type: string
+ *           type: Mongoose ObjectId
  *       - name: max_price
  *         in: query
  *         description: Maximum price of items
@@ -131,23 +130,40 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *         schema:
  *           type: number
  *           format: float
+ *       - name: cursor
+ *         in: query
+ *         description: Cursor for pagination, representing the last item's ID from the previous page
+ *         schema:
+ *           type: Mongoose ObjectId
+ *       - name: limit
+ *         in: query
+ *         description: Number of items to retrieve per page
+ *         schema:
+ *           type: integer
+ *           example: 10
  *     responses:
  *       200:
- *         description: A list of items
+ *         description: A list of items with pagination
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
- *                   name:
- *                     type: string
- *                   price:
- *                     type: number
- *                     format: float
+ *               type: object
+ *               properties:
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: Mongoose ObjectId
+ *                       name:
+ *                         type: string
+ *                       price:
+ *                         type: number
+ *                         format: float
+ *                 cursor:
+ *                   type: Mongoose ObjectId
+ *                   description: Cursor for the next page of results
  *       404:
  *         description: No items found
  *         content:
@@ -157,6 +173,16 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *               properties:
  *                 message:
  *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message explaining the issue
  */
 itemRouter.get("/", ItemController.index);
 
@@ -172,7 +198,7 @@ itemRouter.get("/", ItemController.index);
  *         required: true
  *         description: The ID of the item
  *         schema:
- *           type: string
+ *           type: Mongoose ObjectId
  *     responses:
  *       200:
  *         description: The requested item
@@ -211,7 +237,7 @@ itemRouter.get("/:id", ItemController.get);
  *         required: true
  *         description: The ID of the item
  *         schema:
- *           type: string
+ *           type: Mongoose ObjectId
  *     responses:
  *       204:
  *         description: Item deleted successfully
@@ -239,7 +265,7 @@ itemRouter.delete("/:id", ItemController.remove);
  *         required: true
  *         description: The ID of the item
  *         schema:
- *           type: string
+ *           type: Mongoose ObjectId
  *     requestBody:
  *       required: true
  *       content:
@@ -321,7 +347,6 @@ itemRouter.delete("/:id", ItemController.remove);
  *                 message:
  *                   type: string
  */
-
 itemRouter.put("/:id", busboy.bus, ItemController.update);
 
 module.exports = itemRouter;

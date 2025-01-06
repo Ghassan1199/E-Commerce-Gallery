@@ -7,9 +7,9 @@ const options = {
 
         openapi: '3.0.0', // OpenAPI version
         info: {
-            title: 'API Documentation', // Title of your API
-            version: '1.0.0', // Version of your API
-            description: 'This is the API documentation for my project.', // Description of your API
+            title: 'Abo Mariam Vape Store API Documentation',
+            version: '1.0.0',
+            description: 'This is the API Documentation for Abo Mariam Vape Store',
         },
         servers: [
             {

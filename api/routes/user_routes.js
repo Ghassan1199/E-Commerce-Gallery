@@ -146,7 +146,7 @@ UserRouter.get("/", UserController.index);
  *         required: true
  *         description: ID of the user to be deleted
  *         schema:
- *           type: string
+ *           type: Mongoose ObjectId
  *     responses:
  *       204:
  *         description: User removed successfully
@@ -169,7 +169,7 @@ UserRouter.delete("/:id",UserController.remove);
  *         required: true
  *         description: ID of the user to be updated
  *         schema:
- *           type: string
+ *           type: Mongoose ObjectId
  *     requestBody:
  *       required: true
  *       content:
