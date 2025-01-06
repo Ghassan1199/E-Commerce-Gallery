@@ -84,7 +84,7 @@ const itemRouter = express.Router();
  *               type: object
  *               properties:
  *                 id:
- *                   type: Mongoose ObjectId
+ *                   type: string
  *                 name:
  *                   type: string
  *                 description:
@@ -112,12 +112,12 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *         in: query
  *         description: The ID of the main category
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *       - name: sub_category_id
  *         in: query
  *         description: The ID of the sub category
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *       - name: max_price
  *         in: query
  *         description: Maximum price of items
@@ -134,7 +134,7 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *         in: query
  *         description: Cursor for pagination, representing the last item's ID from the previous page
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *       - name: limit
  *         in: query
  *         description: Number of items to retrieve per page
@@ -155,14 +155,14 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *                     type: object
  *                     properties:
  *                       id:
- *                         type: Mongoose ObjectId
+ *                         type: string
  *                       name:
  *                         type: string
  *                       price:
  *                         type: number
  *                         format: float
  *                 cursor:
- *                   type: Mongoose ObjectId
+ *                   type: string
  *                   description: Cursor for the next page of results
  *       404:
  *         description: No items found
@@ -184,6 +184,7 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *                   type: string
  *                   description: Error message explaining the issue
  */
+
 itemRouter.get("/", ItemController.index);
 
 /**
@@ -198,7 +199,7 @@ itemRouter.get("/", ItemController.index);
  *         required: true
  *         description: The ID of the item
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The requested item
@@ -237,7 +238,7 @@ itemRouter.get("/:id", ItemController.get);
  *         required: true
  *         description: The ID of the item
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *     responses:
  *       204:
  *         description: Item deleted successfully
@@ -265,7 +266,7 @@ itemRouter.delete("/:id", ItemController.remove);
  *         required: true
  *         description: The ID of the item
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:

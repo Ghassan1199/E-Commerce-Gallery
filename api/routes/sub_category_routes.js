@@ -39,7 +39,7 @@ const subCategoryRouter = express.Router();
  *               type: object
  *               properties:
  *                 _id:
- *                   type: Mongoose ObjectId
+ *                   type: string
  *                 name:
  *                   type: string
  *                 description:
@@ -68,7 +68,7 @@ subCategoryRouter.post('/', subCategoryController.create);
  *                 type: object
  *                 properties:
  *                   _id:
- *                     type: Mongoose ObjectId
+ *                     type: string
  *                   name:
  *                     type: string
  *                   description:
@@ -94,7 +94,7 @@ subCategoryRouter.get("/", subCategoryController.index);
  *         required: true
  *         description: ID of the sub-category to be deleted
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *     responses:
  *       204:
  *         description: Sub-category deleted successfully
@@ -130,7 +130,7 @@ subCategoryRouter.delete("/:id", subCategoryController.remove);
  *                 type: string
  *                 description: Description of the sub-category
  *               main_category_id:
- *                 type: Mongoose ObjectId
+ *                 type: string
  *                 description: ID of the main category associated with this sub-category
  *     responses:
  *       200:

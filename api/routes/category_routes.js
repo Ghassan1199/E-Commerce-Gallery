@@ -79,7 +79,7 @@ categoryRouter.post('/', categoryController.create);
  *                     type: object
  *                     properties:
  *                       id:
- *                         type: Mongoose ObjectId
+ *                         type: string
  *                         example: "63f13d3f88eac2b67c1e3d9a"
  *                       name:
  *                         type: string
@@ -126,7 +126,7 @@ categoryRouter.get("/", categoryController.index);
  *         required: true
  *         description: The ID of the category to delete
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *     responses:
  *       204:
  *         description: Category deleted successfully
@@ -154,7 +154,7 @@ categoryRouter.delete("/:id", categoryController.remove);
  *         required: true
  *         description: The ID of the category to update
  *         schema:
- *           type: Mongoose ObjectId
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
