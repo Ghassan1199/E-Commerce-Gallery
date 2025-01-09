@@ -3,8 +3,8 @@ const parseHelper = require("../helpers/response_helper");
 
 const create = async (req, res) => {
     try {
-        const {name, description, price,discount, sub_category_id, main_category_id, files,} = req.body;
-        const item = await ItemServices.create(name, description, price,discount, files, sub_category_id, main_category_id);
+        const {name,ar_name, description, price,discount, sub_category_id, main_category_id, files,} = req.body;
+        const item = await ItemServices.create(name,ar_name, description, price,discount, files, sub_category_id, main_category_id);
         return parseHelper(res, 201, item, "created successfully");
     } catch (err) {
         console.log(err);
@@ -38,8 +38,8 @@ const remove = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const {name, description, price, discount, sub_category_id, main_category_id, files} = req.body;
-        const item = await ItemServices.update(req.params.id, name, description, price, discount, files, sub_category_id, main_category_id);
+        const {name,ar_name, description, price, discount, sub_category_id, main_category_id, files} = req.body;
+        const item = await ItemServices.update(req.params.id, name,ar_name, description, price, discount, files, sub_category_id, main_category_id);
         return parseHelper(res, 200, item, "updated successfully");
     } catch (err) {
         console.log(err);

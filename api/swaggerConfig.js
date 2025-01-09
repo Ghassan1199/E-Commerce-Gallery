@@ -14,12 +14,24 @@ const options = {
         servers: [
             {
                 url: 'https://abomariamvapestorebackend.onrender.com',
+                description: "this is the render server (might be at a sleep state)"
             },
             {
                 url: 'https://abomariambackend.vercel.app/',
+                description: "this is the vercel server (serverless)"
+
             },
             {
-                url: 'http://localhost:5000', // API server URL
+                url: 'http://localhost/{port}',
+                description: "if you want to try it locally",
+                variables: {
+                    port: {
+                        default: "3000",
+                        enum: [
+                            "3000", "8080"
+                        ],
+                    }
+                }
             }
         ],
     },

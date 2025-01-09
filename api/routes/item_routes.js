@@ -27,6 +27,9 @@ const itemRouter = express.Router();
  *               name:
  *                 type: string
  *                 description: The name of the item
+ *               ar_name:
+ *                 type: string
+ *                 description: The Arabic name of the item
  *               description:
  *                 type: string
  *                 description: A description of the item
@@ -59,6 +62,9 @@ const itemRouter = express.Router();
  *               name:
  *                 type: string
  *                 description: The name of the item
+ *               ar_name:
+ *                 type: string
+ *                 description: The Arabic name of the item
  *               description:
  *                 type: string
  *                 description: A description of the item
@@ -94,6 +100,8 @@ const itemRouter = express.Router();
  *                 id:
  *                   type: string
  *                 name:
+ *                   type: string
+ *                 ar_name:
  *                   type: string
  *                 description:
  *                   type: string
@@ -284,6 +292,9 @@ itemRouter.delete("/:id", ItemController.remove);
  *               name:
  *                 type: string
  *                 description: The name of the item
+ *               ar_name:
+ *                 type: string
+ *                 description: The Arabic name of the item
  *               description:
  *                 type: string
  *                 description: A description of the item
@@ -314,6 +325,9 @@ itemRouter.delete("/:id", ItemController.remove);
  *               name:
  *                 type: string
  *                 description: The name of the item
+ *               ar_name:
+ *                 type: string
+ *                 description: The Arabic name of the item
  *               description:
  *                 type: string
  *                 description: A description of the item
@@ -343,6 +357,8 @@ itemRouter.delete("/:id", ItemController.remove);
  *                   type: string
  *                 name:
  *                   type: string
+ *                 ar_name:
+ *                   type: string
  *                 description:
  *                   type: string
  *       400:
@@ -355,6 +371,7 @@ itemRouter.delete("/:id", ItemController.remove);
  *                 message:
  *                   type: string
  */
+
 itemRouter.put("/:id", busboy.bus, ItemController.update);
 
 module.exports = itemRouter;

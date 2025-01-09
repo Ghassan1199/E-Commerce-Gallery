@@ -5,6 +5,9 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    ar_name: {
+        type: String,
+    },
 
     price: {
         type: Number,
@@ -44,7 +47,6 @@ const ItemSchema = new mongoose.Schema({
         }
     }
 });
-
 
 
 const ItemModel = mongoose.model('item', ItemSchema);

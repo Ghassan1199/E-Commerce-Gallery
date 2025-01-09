@@ -3,8 +3,8 @@ const {saveFileToCloudinary, uploadPath, deleteFileFromCloudinary} = require("..
 const path = require("path");
 const ItemModel = require("../models/item_model");
 
-const create = async (name, description, price,discount, images, sub_category_id, main_category_id) => {
-    const item = await new itemModel({name, price,discount, description, sub_category_id, main_category_id});
+const create = async (name,ar_name, description, price,discount, images, sub_category_id, main_category_id) => {
+    const item = await new itemModel({name,ar_name, price,discount, description, sub_category_id, main_category_id});
 
     for (const image in images) {
         const url = await saveFileToCloudinary(path.join(uploadPath, images[image].fileName));
@@ -56,7 +56,7 @@ const getById = async (id) => {
 }
 
 
-const update = async (id, name, description, price,discount, images, sub_category_id, main_category_id) => {
+const update = async (id, name, ar_name,description, price,discount, images, sub_category_id, main_category_id) => {
     // Find the item by ID
     const item = await itemModel.findById(id);
     if (!item) throw new Error("Item not found");
@@ -68,6 +68,7 @@ const update = async (id, name, description, price,discount, images, sub_categor
     item.sub_category_id = sub_category_id || item.sub_category_id;
     item.main_category_id = main_category_id || item.main_category_id;
     item.discount = discount || item.discount;
+    item.ar_name = ar_name || item.ar_name;
 
     // Handle image updates
     if (images && images.length > 0) {
