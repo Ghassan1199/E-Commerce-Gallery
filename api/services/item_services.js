@@ -3,8 +3,8 @@ const {saveFileToCloudinary, uploadPath, deleteFileFromCloudinary} = require("..
 const path = require("path");
 const ItemModel = require("../models/item_model");
 
-const create = async (name, description, price, images, sub_category_id, main_category_id) => {
-    const item = await new itemModel({name, price, description, sub_category_id, main_category_id});
+const create = async (name, description, price,discount, images, sub_category_id, main_category_id) => {
+    const item = await new itemModel({name, price,discount, description, sub_category_id, main_category_id});
 
     for (const image in images) {
         const url = await saveFileToCloudinary(path.join(uploadPath, images[image].fileName));
