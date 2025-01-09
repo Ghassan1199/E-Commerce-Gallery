@@ -7,7 +7,7 @@ const create = async (name,ar_name, description, price,discount, images, sub_cat
     const item = await new itemModel({name,ar_name, price,discount, description, sub_category_id, main_category_id});
 
     for (const image in images) {
-        const url = await saveFileToCloudinary(path.join(uploadPath, images[image].fileName));
+        const {url} = await saveFileToCloudinary(images[image].buffer);
         item.images.push(url);
     }
     await item.save();

@@ -10,33 +10,51 @@ cloudinary.config({
     api_secret: process.env.ClOUDINARY_SECRET_KEY,
 });
 
-const saveFileLocally = async (file, file_name) => {
+const saveFileLocally = async (fileBuffer, fileName) => {
     try {
         if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath, {recursive: true}); // Create the directory and all parent directories
+            fs.mkdirSync(uploadPath, { recursive: true }); // Create the directory and all parent directories
         }
-        const saveTo = path.join(uploadPath, file_name);
-        await file.pipe(fs.createWriteStream(saveTo));
+
+        const saveTo = path.join(uploadPath, fileName);
+
+        // Write the buffer to the file
+        await fs.promises.writeFile(saveTo, fileBuffer);
+
         return saveTo;
     } catch (err) {
-        console.log(err);
+        console.log('Error saving file locally:', err);
+        throw new Error('File save failed');
     }
+};
 
-}
+const saveFileToCloudinary = async (fileBuffer) => {
+    try {
+
+        // Upload the collected buffer to Cloudinary
+        return await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                {
+                    resource_type: 'auto', // Automatically detect the file type
+                },
+                (error, uploadResult) => {
+                    if (error) {
+                        console.log('Error uploading to Cloudinary:', error);
+                        return reject(error);
+                    }
+                    resolve(uploadResult);
+                }
+            );
 
 
-const saveFileToCloudinary = async (file_path) => {
-    const uploadResult = await cloudinary.uploader.upload(file_path, {
-        folder: "AboMariam",
-        transformation: [
-            {quality: "auto"},
-            {fetch_format: "auto"}
-        ]
-    });
-    return uploadResult.url;
-
-}
-
+            const bufferStream = require('stream').Readable.from(fileBuffer);
+            bufferStream.pipe(stream);
+        });
+    } catch (err) {
+        console.log('File upload failed:', err);
+        throw new Error('File upload failed');
+    }
+};
 
 const deleteFileFromCloudinary = async (public_id) => {
     await cloudinary.api.delete_resources(extractPublicId(public_id));
