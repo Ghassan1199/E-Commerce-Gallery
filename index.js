@@ -18,7 +18,6 @@ app.use(morgan('dev'))
 
 connectDB().then(r => console.log('Connected to DB')).catch(err => console.error(err));
 
-
 app.use(router);
 
 
