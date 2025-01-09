@@ -12,15 +12,27 @@ const router = require('./api/routes/index');
 const app = express();
 
 
+const port = process.env.PORT|| 3000
+
+
+app.listen(port,()=>{
+    console.log(`connected to localhost:${port}`);
+    console.log(`API Docs available at http://localhost:${port}/api-docs`);
+    connectDB();
+
+});
+
+
+
+
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(morgan('dev'))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs,{
 
-connectDB().then(r => console.log('Connected to DB')).catch(err => console.error(err));
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs, {}));
+}));
 
 app.get('/swagger.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -28,6 +40,3 @@ app.get('/swagger.json', (req, res) => {
 });
 
 app.use(router);
-
-
-module.exports = app;
