@@ -3,8 +3,8 @@ const parseHelper = require("../helpers/response_helper");
 
 const create = async (req, res) => {
     try {
-        const {name, description, price, sub_category_id, main_category_id, files} = req.body;
-        const item = await ItemServices.create(name, description, price, files, sub_category_id, main_category_id);
+        const {name, description, price,discount, sub_category_id, main_category_id, files,} = req.body;
+        const item = await ItemServices.create(name, description, price,discount, files, sub_category_id, main_category_id);
         return parseHelper(res, 201, item, "created successfully");
     } catch (err) {
         console.log(err);

@@ -34,6 +34,10 @@ const itemRouter = express.Router();
  *                 type: number
  *                 format: float
  *                 description: The price of the item
+ *               discount:
+ *                 type: number
+ *                 format: float
+ *                 description: The discount on the item (optional)
  *               sub_category_id:
  *                 type: string
  *                 description: The ID of the sub-category the item belongs to
@@ -62,6 +66,10 @@ const itemRouter = express.Router();
  *                 type: number
  *                 format: float
  *                 description: The price of the item
+ *               discount:
+ *                 type: number
+ *                 format: float
+ *                 description: The discount on the item (optional)
  *               sub_category_id:
  *                 type: string
  *                 description: The ID of the sub-category the item belongs to
@@ -184,7 +192,6 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *                   type: string
  *                   description: Error message explaining the issue
  */
-
 itemRouter.get("/", ItemController.index);
 
 /**
