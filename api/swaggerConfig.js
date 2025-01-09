@@ -8,12 +8,15 @@ const options = {
         openapi: '3.0.0', // OpenAPI version
         info: {
             title: 'Abo Mariam Vape Store API Documentation',
-            version: '1.0.0',
+            version: '0.2',
             description: 'This is the API Documentation for Abo Mariam Vape Store',
         },
         servers: [
             {
                 url: 'https://abomariamvapestorebackend.onrender.com',
+            },
+            {
+                url: 'https://abomariambackend.vercel.app/',
             },
             {
                 url: 'http://localhost:5000', // API server URL
