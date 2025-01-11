@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser')
-const {injectSpeedInsights} = require('@vercel/speed-insights');
 const dotenv = require('dotenv');
 dotenv.config();
 const morgan = require('morgan');
@@ -21,9 +20,5 @@ connectDB().then(r => console.log('Connected to DB')).catch(err => console.error
 
 app.use(router);
 
-app.use((req, res, next) => {
-    injectSpeedInsights()
-    next();
-})
 
 module.exports = app;
