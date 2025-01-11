@@ -12,16 +12,18 @@ const router = require('./api/routes/index');
 
 const app = express();
 
-
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(morgan('dev'))
-app.use(injectSpeedInsights())
 connectDB().then(r => console.log('Connected to DB')).catch(err => console.error(err));
 
 app.use(router);
 
+app.use((req, res, next) => {
+    injectSpeedInsights()
+    next();
+})
 
 module.exports = app;
