@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const {connectDB} = require('./api/models/index');
 const router = require('./api/routes/index');
 
-injectSpeedInsights();
+
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(morgan('dev'))
-
+app.use(injectSpeedInsights())
 connectDB().then(r => console.log('Connected to DB')).catch(err => console.error(err));
 
 app.use(router);
