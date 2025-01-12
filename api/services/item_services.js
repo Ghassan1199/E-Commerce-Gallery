@@ -82,7 +82,7 @@ const update = async (id, name, ar_name,description, price,discount, images, sub
 
         // Add new images
         for (const image of images) {
-            const url = await saveFileToCloudinary(path.join(uploadPath, image.fileName));
+            const {url} = await saveFileToCloudinary(images[image].buffer);
             item.images.push(url);
         }
     }
