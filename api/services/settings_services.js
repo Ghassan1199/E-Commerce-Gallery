@@ -17,8 +17,9 @@ const update_dollar_price = async (dollar_price) => {
 
 const add_photo_to_hero = async (images) => {
     const settings = await SettingsModel.findOne();
+    
     if (!settings)
-        settings = new SettingsModel.create()
+        settings = new SettingsModel.create();
 
     for (const image in images) {
         const { url } = await saveFileToCloudinary(images[image].buffer);

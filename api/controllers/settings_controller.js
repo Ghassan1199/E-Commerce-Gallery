@@ -46,13 +46,13 @@ const add_hero_photo = async (req, res) => {
     }
 }
 
-const remove_hero_photo = async (req,res)=>{
+const remove_hero_photo = async (req, res) => {
     try {
         const settings = await settingsServices.remove_hero_photo(req.params.index);
         return parseHelper(res, 204, settings, "deleted successfully");
     } catch (err) {
         console.log(err);
-        if(err.message === "photo not found")
+        if (err.message === "photo not found")
             return parseHelper(res, 404, null, err.message);
         return parseHelper(res, 500, null, err);
     }
