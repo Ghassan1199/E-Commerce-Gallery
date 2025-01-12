@@ -35,7 +35,7 @@ const update_dollar_price = async (req, res) => {
     }
 }
 
-const add_photo_to_hero = async (req, res) => {
+const add_hero_photo = async (req, res) => {
     try {
         const { files } = req.body;
         const settings = await settingsServices.add_photo_to_hero(files);
@@ -62,6 +62,6 @@ module.exports = {
     create,
     get,
     update_dollar_price,
-    add_photo_to_hero,
+    add_hero_photo,
     remove_hero_photo
 };

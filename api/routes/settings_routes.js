@@ -183,6 +183,8 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                   type: string
  *                   example: Invalid input or server error.
  */
+settingsRouter.post("/hero:", settingsController.add_hero_photo);
+
 /**
  * @openapi
  * /settings/hero/{index}:
