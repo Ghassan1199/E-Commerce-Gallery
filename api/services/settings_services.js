@@ -26,7 +26,7 @@ const update_about_us = async (about_us) => {
 
 const add_photo_to_hero = async (images) => {
     const settings = await SettingsModel.findOne();
-    
+
     if (!settings)
         settings = new SettingsModel.create();
 
@@ -50,10 +50,63 @@ const remove_hero_photo = async (index) => {
     return settings;
 }
 
+const update_facebook = async (facebook) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    settings.social_media.facebook = facebook;
+    settings.save();
+    return settings;
+}
+
+const update_instagram = async (instagram) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    settings.social_media.instagram = instagram;
+    settings.save();
+    return settings;
+}
+
+const update_telegram = async (telegram) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    settings.social_media.telegram = telegram;
+    settings.save();
+    return settings;
+}
+
+const add_whataspp_account = async (link, phone_number, name) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    const whatsapp = {
+        link, phone_number, name
+    }
+    settings.social_media.whatsapp.push(whatsapp);
+    settings.save();
+    return settings;
+}
+
+const remove_whataspp_account = async (index) => {
+    settings = await SettingsModel.findOne();
+    settings.social_media.whatsapp.pop(index);
+    settings.save();
+    return settings;
+}
+
+
+
 module.exports = {
     get,
     update_dollar_price,
     add_photo_to_hero,
     remove_hero_photo,
-    update_about_us
+    update_about_us,
+    update_facebook,
+    update_instagram,
+    update_telegram,
+    add_whataspp_account,
+    remove_whataspp_account
 };

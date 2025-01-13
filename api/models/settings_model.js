@@ -1,7 +1,41 @@
 const mongoose = require('mongoose');
 
+
+
+const WhatsAppScehma = new mongoose.Schema({
+    link: {
+        type: String,
+    },
+    phone_number: {
+        type: String
+    },
+    name: {
+        type: String
+    }
+}, { _id: false })
+
+const SocialMediaSchema = new mongoose.Schema({
+    facebook: {
+        type: String,
+        default:"facebook"
+
+    },
+    whatsapp: {
+        type: [WhatsAppScehma],
+    },
+    telegram: {
+        type: String,
+        default:"telegram"
+    },
+    instagram: {
+        type: String,
+        default:"instagram"
+    },
+}, { _id: false });
+
+
 const SettingsSchema = new mongoose.Schema({
-    dollar_price:{
+    dollar_price: {
         type: Number,
         required: true,
         default: 0
@@ -10,12 +44,16 @@ const SettingsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'sub_category',
     },
-    hero:{
-        type:[String],
+    hero: {
+        type: [String],
     },
-    about_us :{
+    about_us: {
         type: String,
-        default:"this is about_us"
+        default: "this is about_us"
+    },
+    social_media: {
+        type: SocialMediaSchema,
+        default:  {}
     },
     createdAt: {
         type: Date,
