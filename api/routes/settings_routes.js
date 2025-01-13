@@ -30,19 +30,55 @@ const busboy = require("../middlewares/busboy_middleware");
  *                   type: boolean
  *                   example: true
  *                 data:
- *                   type: array
- *                   items:
- *                     type: object
- *                     example: { 
- *                       _id: "67838759c886a879a8ffc617", 
- *                       dollar_price: 15000, 
- *                       about_us: "this is about_us",
- *                       createdAt: "2025-01-12T09:11:53.993Z", 
- *                       hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
- *                     }
+ *                   type: object
+ *                   properties:
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     sub_category_id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the about_us section."
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
  *                 message:
  *                   type: string
- *                   example: returned successfully
+ *                   example: "Returned successfully"
  *       404:
  *         description: No settings found
  *         content:
@@ -55,7 +91,7 @@ const busboy = require("../middlewares/busboy_middleware");
  *                   example: false
  *                 message:
  *                   type: string
- *                   example: There is no settings yet
+ *                   example: "There is no settings yet"
  *       400:
  *         description: Bad request
  *         content:
@@ -68,10 +104,9 @@ const busboy = require("../middlewares/busboy_middleware");
  *                   example: false
  *                 message:
  *                   type: string
- *                   example: An error occurred
+ *                   example: "An error occurred"
  */
 settingsRouter.get("/", settingsController.get);
-
 /**
  * @openapi
  * /settings/dollar:
@@ -105,15 +140,29 @@ settingsRouter.get("/", settingsController.get);
  *                 data:
  *                   type: object
  *                   example: { 
- *                     _id: "67838759c886a879a8ffc617", 
  *                     dollar_price: 15000,
- *                     about_us: "this is about_us",
- *                     createdAt: "2025-01-12T09:11:53.993Z", 
- *                     hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
+ *                     sub_category_id: "67838759c886a879a8ffc617",
+ *                     hero: [
+ *                       "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     ],
+ *                     about_us: "This is about_us",
+ *                     social_media: {
+ *                       facebook: "https://facebook.com/example",
+ *                       whatsapp: [
+ *                         {
+ *                           link: "https://wa.me/123456789",
+ *                           phone_number: 123456789,
+ *                           name: "Customer Support"
+ *                         }
+ *                       ],
+ *                       telegram: "https://t.me/example",
+ *                       instagram: "https://instagram.com/example"
+ *                     },
+ *                     createdAt: "2025-01-12T09:11:53.993Z"
  *                   }
  *                 message:
  *                   type: string
- *                   example: updated successfully
+ *                   example: "Updated successfully"
  *       400:
  *         description: Bad request
  *         content:
@@ -126,7 +175,7 @@ settingsRouter.get("/", settingsController.get);
  *                   example: false
  *                 message:
  *                   type: string
- *                   example: Invalid input
+ *                   example: "Invalid input"
  */
 settingsRouter.put("/dollar", settingsController.update_dollar_price);
 
@@ -167,16 +216,51 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                   example: added successfully
  *                 data:
  *                   type: object
- *                   example: { 
- *                     _id: "67838759c886a879a8ffc617", 
- *                     dollar_price: 15000,
- *                     about_us: "this is about_us",
- *                     createdAt: "2025-01-12T09:11:53.993Z", 
- *                     hero: [
- *                       "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png",
- *                       "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676063/abcd1234xyz.png"
- *                     ]
- *                   }
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
  *       400:
  *         description: Bad request due to invalid data or an error.
  *         content:
@@ -191,6 +275,7 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                   type: string
  *                   example: Invalid input or server error.
  */
+
 settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
 
 /**
@@ -240,12 +325,11 @@ settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
  */
 settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
 
-
 /**
  * @openapi
  * /settings/about_us:
  *   put:
- *     summary: Update the settings
+ *     summary: Update the about_us section in settings
  *     tags:
  *       - Settings
  *     requestBody:
@@ -256,8 +340,8 @@ settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
  *             type: object
  *             properties:
  *               update_about_us:
- *                 type: String
- *                 example: this is about us
+ *                 type: string
+ *                 example: "This is the updated about_us section."
  *             required:
  *               - update_about_us
  *     responses:
@@ -273,18 +357,56 @@ settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
  *                   example: true
  *                 data:
  *                   type: object
- *                   example: { 
- *                     _id: "67838759c886a879a8ffc617", 
- *                     dollar_price: 15000,
- *                     about_us: "this is about_us",
- *                     createdAt: "2025-01-12T09:11:53.993Z", 
- *                     hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
- *                   }
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the updated about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
  *                 message:
  *                   type: string
- *                   example: updated successfully
+ *                   example: "Updated successfully."
  *       400:
- *         description: Bad request
+ *         description: Bad request due to invalid data or missing required fields.
  *         content:
  *           application/json:
  *             schema:
@@ -295,9 +417,436 @@ settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
  *                   example: false
  *                 message:
  *                   type: string
- *                   example: Invalid input
+ *                   example: "Invalid input or required field missing."
  */
 settingsRouter.put("/about_us", settingsController.update_about_us);
+
+/**
+ * @openapi
+ * /settings/facebook:
+ *   put:
+ *     summary: Update the facebook section in settings
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               facebook:
+ *                 type: string
+ *                 example: "This is the updated facebook section."
+ *             required:
+ *               - facebook
+ *     responses:
+ *       200:
+ *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the updated about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
+ *                 message:
+ *                   type: string
+ *                   example: "Updated successfully."
+ *       400:
+ *         description: Bad request due to invalid data or missing required fields.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid input or required field missing."
+ */
+settingsRouter.put("/facebook", settingsController.update_facebook);
+
+/**
+ * @openapi
+ * /settings/instagram:
+ *   put:
+ *     summary: Update the instagram section in settings
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               facebook:
+ *                 type: string
+ *                 example: "This is the updated instagram section."
+ *             required:
+ *               - instagram
+ *     responses:
+ *       200:
+ *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the updated about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
+ *                 message:
+ *                   type: string
+ *                   example: "Updated successfully."
+ *       400:
+ *         description: Bad request due to invalid data or missing required fields.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid input or required field missing."
+ */
+settingsRouter.put("/instagram", settingsController.update_instagram);
+
+/**
+ * @openapi
+ * /settings/telegram:
+ *   put:
+ *     summary: Update the telegram section in settings
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               facebook:
+ *                 type: string
+ *                 example: "This is the updated telegram section."
+ *             required:
+ *               - telegram
+ *     responses:
+ *       200:
+ *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the updated about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
+ *                 message:
+ *                   type: string
+ *                   example: "Updated successfully."
+ *       400:
+ *         description: Bad request due to invalid data or missing required fields.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid input or required field missing."
+ */
+settingsRouter.put("/telegram", settingsController.update_telegram);
+
+/**
+ * @openapi
+ * /settings/whatsapp:
+ *   post:
+ *     summary: Add a WhatsApp account to the settings
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               link:
+ *                 type: string
+ *                 example: "https://wa.me/123456789"
+ *               phone_number:
+ *                 type: number
+ *                 example: 123456789
+ *               name:
+ *                 type: string
+ *                 example: "Customer Support"
+ *             required:
+ *               - link
+ *               - phone_number
+ *               - name
+ *     responses:
+ *       201:
+ *         description: WhatsApp account added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                 message:
+ *                   type: string
+ *                   example: "Added successfully"
+ *       400:
+ *         description: Bad request due to invalid data or an error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid input or server error."
+ */
+settingsRouter.post("/whatsapp", settingsController.add_whataspp_account);
+
+/**
+ * @openapi
+ * /settings/whatsapp/{index}:
+ *   delete:
+ *     summary: Remove a whatsapp profile
+ *     description: Deletes a specific whatsapp profile from the whatsapp section by its index.
+ *     tags:
+ *       - Settings
+ *     parameters:
+ *       - in: path
+ *         name: index
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The index of the profile to be removed from the whatsapp section.
+ *     responses:
+ *       204:
+ *         description: profile removed successfully. No content is returned in the response.
+ *       404:
+ *         description: Photo not found at the specified index.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *                 message:
+ *                   type: string
+ *                   example: "whatsapp account not found"
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *                 message:
+ *                   type: string
+ *                   example: "Internal server error."
+ */
+settingsRouter.delete("/whatsapp/:index", settingsController.remove_whataspp_account);
+
 
 
 module.exports = settingsRouter;
