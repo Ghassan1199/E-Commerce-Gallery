@@ -37,7 +37,7 @@ const update_dollar_price = async (req, res) => {
 
 const update_about_us = async (req, res) => {
     try {
-        const { dollar_price: about_us } = req.body;
+        const { about_us } = req.body;
         const settings = await settingsServices.update_about_us(about_us);
         return parseHelper(res, 200, settings, "updated successfully");
     } catch (err) {
