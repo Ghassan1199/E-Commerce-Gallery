@@ -339,11 +339,11 @@ settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
  *           schema:
  *             type: object
  *             properties:
- *               update_about_us:
+ *               about_us:
  *                 type: string
  *                 example: "This is the updated about_us section."
  *             required:
- *               - update_about_us
+ *               - about_us
  *     responses:
  *       200:
  *         description: Settings updated successfully
