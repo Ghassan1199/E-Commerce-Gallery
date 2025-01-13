@@ -1,29 +1,59 @@
 const SettingsModel = require('../models/settings_model');
+const { saveFileToCloudinary, uploadPath, deleteFileFromCloudinary } = require("../helpers/file_helpers");
 
-const create = async (dollar_price) => {
-    const old = await SettingsModel.find();
-    if(old.length > 0) {
-        await SettingsModel.deleteMany()
-        console.log("deleted successfully");
-    }
-    const settings = new SettingsModel({dollar_price});
-    await settings.save();
-    return settings;
-}
 
 const get = async () => {
     return SettingsModel.find();
 }
 
-const update = async ( dollar_price) => {
-    const settings = await SettingsModel.findOne();
+const update_dollar_price = async (dollar_price) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
     settings.dollar_price = dollar_price;
     settings.save();
     return settings;
 }
 
+const update_about_us = async (about_us) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    settings.about_us = about_us;
+    settings.save();
+    return settings;
+}
+
+const add_photo_to_hero = async (images) => {
+    const settings = await SettingsModel.findOne();
+    
+    if (!settings)
+        settings = new SettingsModel.create();
+
+    for (const image in images) {
+        const { url } = await saveFileToCloudinary(images[image].buffer);
+        settings.hero.push(url);
+    }
+
+    settings.save();
+    return settings;
+
+}
+
+
+const remove_hero_photo = async (index) => {
+    const settings = await SettingsModel.findOne();
+    if (!settings.hero[index]) throw new Error("photo not found");
+    await deleteFileFromCloudinary(settings.hero[index]);
+    settings.hero.pop(index);
+    await settings.save();
+    return settings;
+}
+
 module.exports = {
-    create,
     get,
-    update
+    update_dollar_price,
+    add_photo_to_hero,
+    remove_hero_photo,
+    update_about_us
 };

@@ -57,6 +57,13 @@ subCategoryRouter.post('/', subCategoryController.create);
  *   get:
  *     summary: Retrieve all sub-categories
  *     tags: [SubCategory]
+ *     parameters:
+ *       - in: query
+ *         name: main_category_id
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Filter sub-categories by their main category ID
  *     responses:
  *       200:
  *         description: List of all sub-categories

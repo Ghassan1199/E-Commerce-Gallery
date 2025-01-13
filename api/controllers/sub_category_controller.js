@@ -13,7 +13,8 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
     try {
-        const subCategories = await SubCategoryServices.index();
+        const {main_category_id} = req.query;
+        const subCategories = await SubCategoryServices.index(main_category_id);
         if (!subCategories.length) throw new Error("There is no sub_categories yet");
         return parseHelper(res, 200, subCategories, "returned successfully");
     } catch (err) {

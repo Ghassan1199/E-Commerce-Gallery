@@ -10,6 +10,13 @@ const SettingsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'sub_category',
     },
+    hero:{
+        type:[String],
+    },
+    about_us :{
+        type: String,
+        default:"this is about_us"
+    },
     createdAt: {
         type: Date,
         default: Date.now,
