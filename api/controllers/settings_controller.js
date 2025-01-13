@@ -35,6 +35,17 @@ const update_dollar_price = async (req, res) => {
     }
 }
 
+const update_about_us = async (req, res) => {
+    try {
+        const { dollar_price: about_us } = req.body;
+        const settings = await settingsServices.update_about_us(about_us);
+        return parseHelper(res, 200, settings, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
 const add_hero_photo = async (req, res) => {
     try {
         const { files } = req.body;
@@ -64,5 +75,6 @@ module.exports = {
     get,
     update_dollar_price,
     add_hero_photo,
-    remove_hero_photo
+    remove_hero_photo,
+    update_about_us
 };

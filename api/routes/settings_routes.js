@@ -36,6 +36,7 @@ const busboy = require("../middlewares/busboy_middleware");
  *                     example: { 
  *                       _id: "67838759c886a879a8ffc617", 
  *                       dollar_price: 15000, 
+ *                       about_us: this is about us
  *                       createdAt: "2025-01-12T09:11:53.993Z", 
  *                       hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
  *                     }
@@ -105,7 +106,8 @@ settingsRouter.get("/", settingsController.get);
  *                   type: object
  *                   example: { 
  *                     _id: "67838759c886a879a8ffc617", 
- *                     dollar_price: 15000, 
+ *                     dollar_price: 15000,
+ *                     about_us: this is about us
  *                     createdAt: "2025-01-12T09:11:53.993Z", 
  *                     hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
  *                   }
@@ -168,6 +170,7 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                   example: { 
  *                     _id: "67838759c886a879a8ffc617", 
  *                     dollar_price: 15000, 
+ *                     about_us: this is about us
  *                     createdAt: "2025-01-12T09:11:53.993Z", 
  *                     hero: [
  *                       "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png",
@@ -236,5 +239,65 @@ settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
  *                   example: "Internal server error."
  */
 settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
+
+
+/**
+ * @openapi
+ * /settings/about_us:
+ *   put:
+ *     summary: Update the about_us
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               update_about_us:
+ *                 type: String
+ *                 example: this is about us
+ *             required:
+ *               - update_about_us
+ *     responses:
+ *       200:
+ *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   example: { 
+ *                     _id: "67838759c886a879a8ffc617", 
+ *                     dollar_price: 15000, 
+ *                     example: this is about us
+ *                     createdAt: "2025-01-12T09:11:53.993Z", 
+ *                     hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
+ *                   }
+ *                 message:
+ *                   type: string
+ *                   example: updated successfully
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Invalid input
+ */
+settingsRouter.put("/about_us", settingsController.update_about_us);
+
 
 module.exports = settingsRouter;

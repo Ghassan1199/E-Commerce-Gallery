@@ -13,6 +13,9 @@ const SettingsSchema = new mongoose.Schema({
     hero:{
         type:[String],
     },
+    about_us :{
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now,

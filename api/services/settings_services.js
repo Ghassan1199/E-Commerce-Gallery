@@ -15,6 +15,15 @@ const update_dollar_price = async (dollar_price) => {
     return settings;
 }
 
+const update_about_us = async (about_us) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    settings.about_us = about_us;
+    settings.save();
+    return settings;
+}
+
 const add_photo_to_hero = async (images) => {
     const settings = await SettingsModel.findOne();
     
@@ -45,5 +54,6 @@ module.exports = {
     get,
     update_dollar_price,
     add_photo_to_hero,
-    remove_hero_photo
+    remove_hero_photo,
+    update_about_us
 };
