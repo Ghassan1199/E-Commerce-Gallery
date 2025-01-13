@@ -275,8 +275,109 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                   type: string
  *                   example: Invalid input or server error.
  */
-
 settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
+
+/**
+ * @openapi
+ * /settings/hero:
+ *   put:
+ *     summary: Edit photos in the hero section
+ *     description: Update a specific photo in the hero section by providing the index and a new photo using a multipart form data request.
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               files:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: The new photo file to replace the existing one.
+ *               index:
+ *                 type: integer
+ *                 description: The index of the photo to replace in the hero section.
+ *                 example: 0
+ *     responses:
+ *       200:
+ *         description: Photo updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: updated successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
+ *       400:
+ *         description: Bad request due to invalid data or an error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *                 message:
+ *                   type: string
+ *                   example: Invalid input or server error.
+ */
+settingsRouter.put("/hero", busboy.bus, settingsController.edit_hero_photos);
 
 /**
  * @openapi

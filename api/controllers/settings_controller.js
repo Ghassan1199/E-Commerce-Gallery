@@ -57,6 +57,17 @@ const add_hero_photo = async (req, res) => {
     }
 }
 
+const edit_hero_photos = async (req, res) => {
+    try {
+        const { files, index } = req.body;
+        const settings = await settingsServices.edit_hero_photos(files[0], index);
+        return parseHelper(res, 200, settings, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
 const remove_hero_photo = async (req, res) => {
     try {
         const settings = await settingsServices.remove_hero_photo(req.params.index);
@@ -126,6 +137,7 @@ const remove_whataspp_account = async (req, res) => {
     }
 }
 
+
 module.exports = {
     create,
     get,
@@ -137,5 +149,6 @@ module.exports = {
     update_instagram,
     update_telegram,
     add_whataspp_account,
-    remove_whataspp_account
+    remove_whataspp_account,
+    edit_hero_photos
 };
