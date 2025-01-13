@@ -36,7 +36,6 @@ const busboy = require("../middlewares/busboy_middleware");
  *                     example: { 
  *                       _id: "67838759c886a879a8ffc617", 
  *                       dollar_price: 15000, 
- *                       about_us: this is about us
  *                       createdAt: "2025-01-12T09:11:53.993Z", 
  *                       hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
  *                     }
@@ -106,8 +105,7 @@ settingsRouter.get("/", settingsController.get);
  *                   type: object
  *                   example: { 
  *                     _id: "67838759c886a879a8ffc617", 
- *                     dollar_price: 15000,
- *                     about_us: this is about us
+ *                     dollar_price: 15000, 
  *                     createdAt: "2025-01-12T09:11:53.993Z", 
  *                     hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
  *                   }
@@ -170,7 +168,6 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                   example: { 
  *                     _id: "67838759c886a879a8ffc617", 
  *                     dollar_price: 15000, 
- *                     about_us: this is about us
  *                     createdAt: "2025-01-12T09:11:53.993Z", 
  *                     hero: [
  *                       "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png",
@@ -245,7 +242,7 @@ settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
  * @openapi
  * /settings/about_us:
  *   put:
- *     summary: Update the about_us
+ *     summary: Update the settings
  *     tags:
  *       - Settings
  *     requestBody:
@@ -276,7 +273,6 @@ settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
  *                   example: { 
  *                     _id: "67838759c886a879a8ffc617", 
  *                     dollar_price: 15000, 
- *                     example: this is about us
  *                     createdAt: "2025-01-12T09:11:53.993Z", 
  *                     hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
  *                   }

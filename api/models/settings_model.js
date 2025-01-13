@@ -14,7 +14,8 @@ const SettingsSchema = new mongoose.Schema({
         type:[String],
     },
     about_us :{
-        type: String
+        type: String,
+        default:"this is about_us"
     },
     createdAt: {
         type: Date,
