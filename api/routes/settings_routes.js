@@ -132,8 +132,8 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  * @openapi
  * /settings/hero:
  *   post:
- *     summary: Add a photo to the hero section
- *     description: Upload a photo to be added to the hero section using a multipart form data request.
+ *     summary: Add photos to the hero section
+ *     description: Upload one or more photos to be added to the hero section using a multipart form data request.
  *     tags:
  *       - Settings
  *     requestBody:
@@ -144,12 +144,14 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *             type: object
  *             properties:
  *               files:
- *                 type: string
- *                 format: binary
- *                 description: The photo file to be uploaded.
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: The photo files to be uploaded.
  *     responses:
  *       201:
- *         description: Photo added successfully.
+ *         description: Photos added successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -167,7 +169,10 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                     _id: "67838759c886a879a8ffc617", 
  *                     dollar_price: 15000, 
  *                     createdAt: "2025-01-12T09:11:53.993Z", 
- *                     hero: ["http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"] 
+ *                     hero: [
+ *                       "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png",
+ *                       "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676063/abcd1234xyz.png"
+ *                     ]
  *                   }
  *       400:
  *         description: Bad request due to invalid data or an error.

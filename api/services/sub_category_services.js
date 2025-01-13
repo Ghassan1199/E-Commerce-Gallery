@@ -6,9 +6,15 @@ const create = async (name, description, main_category_id) => {
     return subCategory;
 }
 
-const index = async () => {
-    return SubCategoryModel.find().populate("main_category_id");
+const index = async (main_category_id) => {
+    const filter = {};
+
+    if (main_category_id) {
+        filter.main_category_id = main_category_id;
+    }
+    return SubCategoryModel.find(filter).populate("main_category_id");
 }
+
 const remove = async (id) => {
     const subCategory = await SubCategoryModel.findByIdAndDelete(id);
     if (!subCategory) throw new Error("SubCategory not found");
