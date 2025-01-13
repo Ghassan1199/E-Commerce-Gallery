@@ -49,6 +49,7 @@ const add_hero_photo = async (req, res) => {
 const remove_hero_photo = async (req, res) => {
     try {
         const settings = await settingsServices.remove_hero_photo(req.params.index);
+        console.log("render")
         return parseHelper(res, 204, settings, "deleted successfully");
     } catch (err) {
         console.log(err);
