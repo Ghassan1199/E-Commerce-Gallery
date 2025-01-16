@@ -36,6 +36,7 @@ const saveFileToCloudinary = async (fileBuffer) => {
             const stream = cloudinary.uploader.upload_stream(
                 {
                     resource_type: 'auto', // Automatically detect the file type
+                    folder: "AboMariam"
                 },
                 (error, uploadResult) => {
                     if (error) {
@@ -56,8 +57,10 @@ const saveFileToCloudinary = async (fileBuffer) => {
     }
 };
 
-const deleteFileFromCloudinary = async (public_id) => {
-    await cloudinary.api.delete_resources(extractPublicId(public_id));
+const deleteFileFromCloudinary = async (url) => {
+    const extracted_url = extractPublicId(url)
+    console.log(extracted_url)
+    await cloudinary.api.delete_resources(extracted_url);
 }
 
 
