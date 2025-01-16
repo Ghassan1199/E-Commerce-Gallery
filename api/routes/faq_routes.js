@@ -29,12 +29,12 @@ const busboy = require("../middlewares/busboy_middleware");
  *               answer:
  *                 type: string
  *                 description: The answer to the FAQ question
- *               files:
+ *               images:
  *                 type: array
  *                 items:
  *                   type: file
  *                   format: binary
- *                 description: A list of files (e.g., images, documents) associated with the FAQ entry
+ *                 description: A list of images
  *             required:
  *               - question
  *               - answer
@@ -48,7 +48,7 @@ const busboy = require("../middlewares/busboy_middleware");
  *               answer:
  *                 type: string
  *                 description: The answer to the FAQ question
- *               files:
+ *               images:
  *                 type: array
  *                 items:
  *                   type: string
@@ -111,11 +111,11 @@ faqRouter.post('/', busboy.bus, faqController.create);
  *                   answer:
  *                     type: string
  *                     description: The answer to the FAQ question
- *                   files:
+ *                   images:
  *                     type: array
  *                     items:
  *                       type: string
- *                       description: URLs of associated files (e.g., images, documents)
+ *                       description: URLs of associated images
  *       404:
  *         description: No FAQs found
  *         content:
@@ -205,14 +205,14 @@ faqRouter.delete('/:faq_id/', faqController.remove);
  *           schema:
  *             type: object
  *             properties:
- *               files:
+ *               images:
  *                 type: array
  *                 items:
  *                   type: file
  *                   format: binary
- *                 description: A list of files (images) to replace the existing photo
+ *                 description: A list of images
  *             required:
- *               - files
+ *               - images
  *     responses:
  *       200:
  *         description: FAQ entry photo updated successfully
@@ -230,11 +230,11 @@ faqRouter.delete('/:faq_id/', faqController.remove);
  *                 answer:
  *                   type: string
  *                   description: The answer to the updated FAQ question
- *                 files:
+ *                 images:
  *                   type: array
  *                   items:
  *                     type: string
- *                     description: URLs of associated files (e.g., images, documents)
+ *                     description: URLs of associated images
  *       400:
  *         description: Bad request, invalid data or file upload error
  *         content:
@@ -334,14 +334,14 @@ faqRouter.delete('/:faq_id/:index', faqController.remove_faq_photo);
  *           schema:
  *             type: object
  *             properties:
- *               files:
+ *               images:
  *                 type: array
  *                 items:
  *                   type: file
  *                   format: binary
- *                 description: A list of files (images) to add to the FAQ entry
+ *                 description: A list of images
  *             required:
- *               - files
+ *               - images
  *     responses:
  *       201:
  *         description: FAQ entry photo added successfully
@@ -359,11 +359,11 @@ faqRouter.delete('/:faq_id/:index', faqController.remove_faq_photo);
  *                 answer:
  *                   type: string
  *                   description: The answer to the updated FAQ question
- *                 files:
+ *                 images:
  *                   type: array
  *                   items:
  *                     type: string
- *                     description: URLs of associated files (e.g., images, documents)
+ *                     description: URLs of associated images (e.g., images, documents)
  *       400:
  *         description: Bad request, invalid data or file upload error
  *         content:
@@ -443,11 +443,11 @@ faqRouter.post('/:faq_id/', busboy.bus, faqController.add_faq_photo);
  *                 answer:
  *                   type: string
  *                   description: The updated answer to the FAQ question
- *                 files:
+ *                 images:
  *                   type: array
  *                   items:
  *                     type: string
- *                     description: URLs of associated files (e.g., images, documents)
+ *                     description: URLs of associated images
  *       400:
  *         description: Bad request, invalid data
  *         content:
