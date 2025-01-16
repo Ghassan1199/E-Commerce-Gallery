@@ -1,6 +1,5 @@
 const itemModel = require('../models/item_model');
-const {saveFileToCloudinary, uploadPath, deleteFileFromCloudinary} = require("../helpers/file_helpers");
-const path = require("path");
+const {saveFileToCloudinary, deleteFileFromCloudinary} = require("../helpers/file_helpers");
 const ItemModel = require("../models/item_model");
 
 const create = async (name,ar_name, description, price,discount, images, sub_category_id, main_category_id) => {
