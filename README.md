@@ -41,6 +41,8 @@ Before running the project locally, ensure you have the following installed:
   ```
 ## Running the Project Locally
 To run the project locally, use the following command:
-```bash npm start```
+```bash 
+npm start
+```
 This will start the server using nodemon, which automatically restarts the server when changes are made.
 
