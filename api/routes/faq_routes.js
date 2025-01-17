@@ -181,6 +181,65 @@ faqRouter.delete('/:faq_id/', faqController.remove);
 
 /**
  * @openapi
+ * /faq/{faq_id}:
+ *   get:
+ *     summary: Retrieve a specific FAQ entry by ID
+ *     tags: [FAQ]
+ *     parameters:
+ *       - in: path
+ *         name: faq_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the FAQ entry to retrieve
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the FAQ entry
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the FAQ entry
+ *                 question:
+ *                   type: string
+ *                   description: The question of the FAQ entry
+ *                 answer:
+ *                   type: string
+ *                   description: The answer to the FAQ question
+ *                 images:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                     description: URLs of associated images
+ *       404:
+ *         description: FAQ entry not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating the FAQ entry was not found
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message describing the issue
+ */
+faqRouter.get('/:faq_id/', faqController.get);
+
+
+/**
+ * @openapi
  * /faq/{faq_id}/{index}:
  *   put:
  *     summary: Update a specific FAQ entry's photo by ID and index
