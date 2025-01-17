@@ -25,6 +25,20 @@ const index = async (_, res) => {
     }
 }
 
+const get = async (req, res) => {
+    try {
+        const { faq_id } = req.params;
+        const faqs = await faqServices.get(faq_id);
+        if (!faqs) throw new Error("faq not found");
+        return parseHelper(res, 200, faqs, "returned successfully");
+    } catch (err) {
+        if (err.message === "faq not found")
+            return parseHelper(res, 404, null, err.message);
+        console.log(err);
+        return parseHelper(res, 500, null, err);
+    }
+}
+
 const update = async (req, res) => {
     try {
         const { question, answer } = req.body;
@@ -58,7 +72,7 @@ const add_faq_photo = async (req, res) => {
 const edit_faq_photo = async (req, res) => {
     try {
         const { files } = req.body;
-        const { faq_id ,index} = req.params
+        const { faq_id, index } = req.params
         const faq = await faqServices.edit_faq_photo(faq_id, index, files[0]);
         return parseHelper(res, 200, faq, "updated successfully");
     } catch (err) {
@@ -105,5 +119,6 @@ module.exports = {
     add_faq_photo,
     remove_faq_photo,
     edit_faq_photo,
-    update
+    update,
+    get
 };

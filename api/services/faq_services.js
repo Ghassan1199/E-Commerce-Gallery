@@ -15,6 +15,10 @@ const index = async () => {
     return FaqModel.find();
 }
 
+const get = async (faq_id) => {
+    return FaqModel.findById(faq_id);
+}
+
 const remove = async (id) => {
     const faq = await FaqModel.findByIdAndDelete(id);
     for (const image in faq.images) {
@@ -78,5 +82,6 @@ module.exports = {
     update,
     add_faq_photo,
     remove_faq_photo,
-    edit_faq_photo
+    edit_faq_photo,
+    get
 }
