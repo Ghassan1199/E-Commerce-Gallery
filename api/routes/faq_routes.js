@@ -327,7 +327,6 @@ faqRouter.get('/:faq_id/', faqController.get);
  */
 faqRouter.put('/:faq_id/:index', busboy.bus, faqController.edit_faq_photo);
 
-
 /**
  * @openapi
  * /faq/{faq_id}/{index}:
