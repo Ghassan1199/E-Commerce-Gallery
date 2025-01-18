@@ -1,19 +1,19 @@
 const itemModel = require('../models/item_model');
-const {saveFileToCloudinary, deleteFileFromCloudinary} = require("../helpers/file_helpers");
+const { saveFileToCloudinary, deleteFileFromCloudinary } = require("../helpers/file_helpers");
 const ItemModel = require("../models/item_model");
 
-const create = async (name,ar_name, description, price,discount, images, sub_category_id, main_category_id) => {
-    const item = await new itemModel({name,ar_name, price,discount, description, sub_category_id, main_category_id});
+const create = async (name, ar_name, description, price, discount, images, sub_category_id, main_category_id) => {
+    const item = await new itemModel({ name, ar_name, price, discount, description, sub_category_id, main_category_id });
 
     for (const image in images) {
-        const {url} = await saveFileToCloudinary(images[image].buffer);
+        const { url } = await saveFileToCloudinary(images[image].buffer);
         item.images.push(url);
     }
     await item.save();
     return item;
 }
 
-const index = async (main_category_id, sub_category_id, max_price, min_price,cursor,limit) => {
+const index = async (main_category_id, sub_category_id, max_price, min_price, cursor, limit) => {
 
     const filter = {};
 
@@ -55,12 +55,11 @@ const getById = async (id) => {
 }
 
 
-const update = async (id, name, ar_name,description, price,discount, images, sub_category_id, main_category_id) => {
-    // Find the item by ID
+const update = async (id, name, ar_name, description, price, discount, sub_category_id, main_category_id) => {
+
     const item = await itemModel.findById(id);
     if (!item) throw new Error("Item not found");
 
-    // Update the fields of the item
     item.name = name || item.name;
     item.description = description || item.description;
     item.price = price || item.price;
@@ -69,32 +68,52 @@ const update = async (id, name, ar_name,description, price,discount, images, sub
     item.discount = discount || item.discount;
     item.ar_name = ar_name || item.ar_name;
 
-    // Handle image updates
-    if (images && images.length > 0) {
-        // Delete old images from Cloudinary
-        for (const image of item.images) {
-            await deleteFileFromCloudinary(image);
-        }
-
-        // Clear the old images array
-        item.images = [];
-
-        // Add new images
-        for (const image of images) {
-            const {url} = await saveFileToCloudinary(images[image].buffer);
-            item.images.push(url);
-        }
-    }
-
     await item.save();
 
     return item;
 };
+
+const add_item_photo = async (item_id, images) => {
+    const item = await ItemModel.findById(item_id);
+    if (!item) throw new Error("faq not found ")
+    for (const image in images) {
+        const { url } = await saveFileToCloudinary(images[image].buffer);
+        item.images.push(url);
+    }
+
+    item.save();
+    return item;
+
+}
+
+const remove_item_photo = async (item_id, index) => {
+    const item = await ItemModel.findById(item_id);
+    if (!item) throw new Error("item not found ")
+    console.log(index)
+    if (!item.images[index]) throw new Error("photo not found");
+    await deleteFileFromCloudinary(item.images[index]);
+    item.images.splice(index, 1);
+    await item.save();
+    return item;
+}
+
+
+const edit_item_photo = async (item_id, index, image) => {
+    let item = await ItemModel.findById(item_id);
+    item = await remove_item_photo(item_id, index);
+    const { url } = await saveFileToCloudinary(image.buffer);
+    item.images.push(url);
+    await item.save();
+    return item;
+}
 
 module.exports = {
     create,
     index,
     remove,
     update,
-    getById
+    getById,
+    add_item_photo,
+    edit_item_photo,
+    remove_item_photo
 };

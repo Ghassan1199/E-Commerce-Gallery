@@ -85,8 +85,8 @@ const edit_faq_photo = async (req, res) => {
 const remove_faq_photo = async (req, res) => {
     try {
         const { faq_id, index } = req.params
-        const settings = await faqServices.remove_faq_photo(faq_id, index);
-        return parseHelper(res, 204, settings, "deleted successfully");
+        const faq = await faqServices.remove_faq_photo(faq_id, index);
+        return parseHelper(res, 204, faq, "deleted successfully");
     } catch (err) {
         console.log(err);
         if (err.message === "photo not found")
