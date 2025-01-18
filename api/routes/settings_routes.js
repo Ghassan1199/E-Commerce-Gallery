@@ -279,12 +279,20 @@ settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
 
 /**
  * @openapi
- * /settings/hero:
+ * /settings/hero/{index}:
  *   put:
  *     summary: Edit photos in the hero section
- *     description: Update a specific photo in the hero section by providing the index and a new photo using a multipart form data request.
+ *     description: Update a specific photo in the hero section by providing the index in the path parameter and a new photo using a multipart form data request.
  *     tags:
  *       - Settings
+ *     parameters:
+ *       - in: path
+ *         name: index
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 0
+ *         description: The index of the photo to replace in the hero section.
  *     requestBody:
  *       required: true
  *       content:
@@ -298,10 +306,6 @@ settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
  *                   type: string
  *                   format: binary
  *                 description: The new photo file to replace the existing one.
- *               index:
- *                 type: integer
- *                 description: The index of the photo to replace in the hero section.
- *                 example: 0
  *     responses:
  *       200:
  *         description: Photo updated successfully.
@@ -377,7 +381,7 @@ settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
  *                   type: string
  *                   example: Invalid input or server error.
  */
-settingsRouter.put("/hero", busboy.bus, settingsController.edit_hero_photos);
+settingsRouter.put("/hero/:index", busboy.bus, settingsController.edit_hero_photos);
 
 /**
  * @openapi
