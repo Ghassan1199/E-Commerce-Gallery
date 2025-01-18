@@ -59,7 +59,8 @@ const add_hero_photo = async (req, res) => {
 
 const edit_hero_photos = async (req, res) => {
     try {
-        const { files, index } = req.body;
+        const { files } = req.body;
+        const {index} = req.params;
         const settings = await settingsServices.edit_hero_photos(files[0], index);
         return parseHelper(res, 200, settings, "updated successfully");
     } catch (err) {
