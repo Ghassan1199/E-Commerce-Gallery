@@ -22,7 +22,7 @@ const options = {
                 description: "this is the render server (might be at a sleep state)"
             },
             {
-                url: 'http://localhost/{port}',
+                url: 'http://localhost:{port}',
                 description: "if you want to try it locally",
                 variables: {
                     port: {

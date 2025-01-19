@@ -17,7 +17,7 @@ const WhatsAppScehma = new mongoose.Schema({
 const SocialMediaSchema = new mongoose.Schema({
     facebook: {
         type: String,
-        default:"facebook"
+        default: "facebook"
 
     },
     whatsapp: {
@@ -25,12 +25,16 @@ const SocialMediaSchema = new mongoose.Schema({
     },
     telegram: {
         type: String,
-        default:"telegram"
+        default: "telegram"
     },
     instagram: {
         type: String,
-        default:"instagram"
+        default: "instagram"
     },
+    youtube: {
+        type: String,
+        default: "youtube"
+    }
 }, { _id: false });
 
 
@@ -53,7 +57,7 @@ const SettingsSchema = new mongoose.Schema({
     },
     social_media: {
         type: SocialMediaSchema,
-        default:  {}
+        default: {}
     },
     createdAt: {
         type: Date,

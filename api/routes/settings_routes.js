@@ -72,6 +72,9 @@ const busboy = require("../middlewares/busboy_middleware");
  *                         instagram:
  *                           type: string
  *                           example: "https://instagram.com/example"
+ *                         youtube:
+ *                           type: string
+ *                           example: "youtube"
  *                     createdAt:
  *                       type: string
  *                       format: date-time
@@ -107,6 +110,7 @@ const busboy = require("../middlewares/busboy_middleware");
  *                   example: "An error occurred"
  */
 settingsRouter.get("/", settingsController.get);
+
 /**
  * @openapi
  * /settings/dollar:
@@ -624,6 +628,106 @@ settingsRouter.put("/facebook", settingsController.update_facebook);
 
 /**
  * @openapi
+ * /settings/youtube:
+ *   put:
+ *     summary: Update the youtube section in settings
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               youtube:
+ *                 type: string
+ *                 example: "This is the updated youtube section."
+ *             required:
+ *               - youtube
+ *     responses:
+ *       200:
+ *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the updated about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                         youtube:
+ *                           type: string
+ *                           example: "youtube"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
+ *                 message:
+ *                   type: string
+ *                   example: "Updated successfully."
+ *       400:
+ *         description: Bad request due to invalid data or missing required fields.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid input or required field missing."
+ */
+settingsRouter.put("/youtube", settingsController.update_youtube);
+
+
+/**
+ * @openapi
  * /settings/instagram:
  *   put:
  *     summary: Update the instagram section in settings
@@ -695,6 +799,9 @@ settingsRouter.put("/facebook", settingsController.update_facebook);
  *                         instagram:
  *                           type: string
  *                           example: "https://instagram.com/example"
+ *                         youtube:
+ *                           type: string
+ *                           example: "youtube"
  *                     createdAt:
  *                       type: string
  *                       format: date-time

@@ -67,6 +67,15 @@ const update_facebook = async (facebook) => {
     return settings;
 }
 
+const update_youtube = async (youtube) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    settings.social_media.youtube = youtube;
+    settings.save();
+    return settings;
+}
+
 const update_instagram = async (instagram) => {
     settings = await SettingsModel.findOne();
     if (!settings)
@@ -117,5 +126,6 @@ module.exports = {
     update_telegram,
     add_whataspp_account,
     remove_whataspp_account,
-    edit_hero_photos
+    edit_hero_photos,
+    update_youtube
 };
