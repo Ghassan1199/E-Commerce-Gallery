@@ -102,7 +102,7 @@ const edit_item_photo = async (item_id, index, image) => {
     let item = await ItemModel.findById(item_id);
     item = await remove_item_photo(item_id, index);
     const { url } = await saveFileToCloudinary(image.buffer);
-    item.images.push(url);
+    item.images.splice(index, 0, url);
     await item.save();
     return item;
 }
