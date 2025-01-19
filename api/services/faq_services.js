@@ -69,7 +69,7 @@ const edit_faq_photo = async (id, index, image) => {
     let faq = await FaqModel.findById(id);
     faq = await remove_faq_photo(id, index);
     const { url } = await saveFileToCloudinary(image.buffer);
-    faq.images.push(url);
+    faq.images.splice(index, 0, url);
     await faq.save();
     return faq;
 }

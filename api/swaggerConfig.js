@@ -13,13 +13,13 @@ const options = {
         },
         servers: [
             {
-                url: 'https://abomariamvapestorebackend.onrender.com',
-                description: "this is the render server (might be at a sleep state)"
-            },
-            {
                 url: 'https://abomariambackend.vercel.app/',
                 description: "this is the vercel server (serverless)"
 
+            },
+            {
+                url: 'https://abomariamvapestorebackend.onrender.com',
+                description: "this is the render server (might be at a sleep state)"
             },
             {
                 url: 'http://localhost/{port}',
