@@ -41,12 +41,22 @@ const itemRouter = express.Router();
  *                 type: number
  *                 format: float
  *                 description: The discount on the item (optional)
- *               sub_category_id:
- *                 type: string
- *                 description: The ID of the sub-category the item belongs to
  *               main_category_id:
- *                 type: string
- *                 description: The ID of the main category the item belongs to
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: The ID of the main category the item belongs to
+ *                   name:
+ *                     type: string
+ *                     description: The name of the main category
+ *                   description:
+ *                     type: string
+ *                     description: A description of the main category
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                     description: The creation date of the main category
  *               files:
  *                 type: array
  *                 items:
@@ -55,6 +65,10 @@ const itemRouter = express.Router();
  *                 description: A list of files (images) associated with the item
  *             required:
  *               - name
+ *               - ar_name
+ *               - price
+ *               - description
+ *               - main_category_id
  *         application/json:
  *           schema:
  *             type: object
@@ -76,12 +90,22 @@ const itemRouter = express.Router();
  *                 type: number
  *                 format: float
  *                 description: The discount on the item (optional)
- *               sub_category_id:
- *                 type: string
- *                 description: The ID of the sub-category the item belongs to
  *               main_category_id:
- *                 type: string
- *                 description: The ID of the main category the item belongs to
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: The ID of the main category the item belongs to
+ *                   name:
+ *                     type: string
+ *                     description: The name of the main category
+ *                   description:
+ *                     type: string
+ *                     description: A description of the main category
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                     description: The creation date of the main category
  *               files:
  *                 type: array
  *                 items:
@@ -89,6 +113,10 @@ const itemRouter = express.Router();
  *                   description: The file URLs associated with the item
  *             required:
  *               - name
+ *               - ar_name
+ *               - price
+ *               - description
+ *               - main_category_id
  *     responses:
  *       201:
  *         description: Item created successfully
@@ -105,6 +133,26 @@ const itemRouter = express.Router();
  *                   type: string
  *                 description:
  *                   type: string
+ *                 price:
+ *                   type: number
+ *                 discount:
+ *                   type: number
+ *                 images:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 main_category_id:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     description:
+ *                       type: string
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
  *       400:
  *         description: Bad request, invalid data or file upload error
  *         content:
@@ -174,9 +222,32 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *                         type: string
  *                       name:
  *                         type: string
+ *                       ar_name:
+ *                         type: string
+ *                       description:
+ *                         type: string
  *                       price:
  *                         type: number
  *                         format: float
+ *                       discount:
+ *                         type: number
+ *                         format: float
+ *                       images:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                       main_category_id:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                           name:
+ *                             type: string
+ *                           description:
+ *                             type: string
+ *                           createdAt:
+ *                             type: string
+ *                             format: date-time
  *                 cursor:
  *                   type: string
  *                   description: Cursor for the next page of results
@@ -217,18 +288,47 @@ itemRouter.get("/", ItemController.index);
  *           type: string
  *     responses:
  *       200:
- *         description: The requested item
+ *         description: A list of items with pagination
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 id:
- *                   type: string
- *                 name:
- *                   type: string
- *                 description:
- *                   type: string
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       ar_name:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       price:
+ *                         type: number
+ *                         format: float
+ *                       discount:
+ *                         type: number
+ *                         format: float
+ *                       images:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                       main_category_id:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                           name:
+ *                             type: string
+ *                           description:
+ *                             type: string
+ *                           createdAt:
+ *                             type: string
+ *                             format: date-time
  *       404:
  *         description: Item not found
  *         content:
