@@ -103,6 +103,17 @@ const update_instagram = async (req, res) => {
     }
 }
 
+const update_youtube = async (req, res) => {
+    try {
+        const { youtube } = req.body;
+        const settings = await settingsServices.update_youtube(youtube);
+        return parseHelper(res, 200, settings, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
+
 
 const update_telegram = async (req, res) => {
     try {
@@ -151,5 +162,6 @@ module.exports = {
     update_telegram,
     add_whataspp_account,
     remove_whataspp_account,
-    edit_hero_photos
+    edit_hero_photos,
+    update_youtube
 };
