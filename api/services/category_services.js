@@ -21,9 +21,16 @@ const remove = async (id) => {
 
 
 const update = async (id, name, description, image) => {
-    const { url } = await saveFileToCloudinary(image.buffer);
-    const category = await CategoryModel.findByIdAndUpdate(id, { name, description, image:url }, { new: true });
+    const category = await CategoryModel.findById(id);
     if (!category) throw new Error("Category not found");
+
+    if (image) {
+        const { url } = await saveFileToCloudinary(image.buffer);
+        category.image = url;
+    }
+    category.name = name || category.name;
+    category.description = description || category.description;
+    await category.save();
     return category;
 }
 
