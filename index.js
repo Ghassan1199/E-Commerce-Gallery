@@ -28,7 +28,6 @@ app.get('/swagger.json', (req, res) => {
     res.json(swaggerSpecs);
 });
 
-
 app.use(router);
 
 app.listen(process.env.PORT || 8080, () => {
@@ -36,4 +35,5 @@ app.listen(process.env.PORT || 8080, () => {
     console.log(`API Docs available at http://localhost:${process.env.PORT || 8080}/api-docs`);
     connectDB();
 });
+
 module.exports = app;
