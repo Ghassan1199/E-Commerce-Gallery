@@ -1,6 +1,7 @@
 const express = require("express");
 const categoryController = require("../controllers/category_controller.js");
 const categoryRouter = express.Router();
+const busboy = require("../middlewares/busboy_middleware");
 
 /**
  * @openapi
@@ -19,7 +20,7 @@ const categoryRouter = express.Router();
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -29,6 +30,10 @@ const categoryRouter = express.Router();
  *               description:
  *                 type: string
  *                 description: A description of the category
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: The image of the category
  *             required:
  *               - name  # Only name is required
  *     responses:
@@ -43,6 +48,8 @@ const categoryRouter = express.Router();
  *                   type: string
  *                 description:
  *                   type: string
+ *                 image:
+ *                   type: string
  *       400:
  *         description: Bad request
  *         content:
@@ -53,7 +60,7 @@ const categoryRouter = express.Router();
  *                 message:
  *                   type: string
  */
-categoryRouter.post('/', categoryController.create);
+categoryRouter.post('/', busboy.bus, categoryController.create);
 
 /**
  * @openapi
@@ -87,6 +94,9 @@ categoryRouter.post('/', categoryController.create);
  *                       description:
  *                         type: string
  *                         example: "Devices and gadgets"
+ *                       image:
+ *                         type: string
+ *                         example: "https://res.cloudinary.com/dkqzjz4yv/image/upload/v1694534841/Category/63f13d3f88eac2b67c1e3d9a.jpg"
  *       404:
  *         description: No categories found.
  *         content:
