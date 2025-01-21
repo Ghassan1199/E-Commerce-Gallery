@@ -168,7 +168,7 @@ categoryRouter.delete("/:id", categoryController.remove);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -178,6 +178,10 @@ categoryRouter.delete("/:id", categoryController.remove);
  *               description:
  *                 type: string
  *                 description: The new description of the category
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: The new image of the category
  *     responses:
  *       200:
  *         description: Category updated successfully
@@ -200,6 +204,6 @@ categoryRouter.delete("/:id", categoryController.remove);
  *                 message:
  *                   type: string
  */
-categoryRouter.put("/:id", categoryController.update);
+categoryRouter.put("/:id", busboy.bus, categoryController.update);
 
 module.exports = categoryRouter;

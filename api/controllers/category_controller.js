@@ -36,10 +36,9 @@ const remove = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const name = req.body.name;
-        const description = req.body.description;
+        const {name,description,files} = req.body;
 
-        const category = await CategoryServices.update(req.params.id,name, description);
+        const category = await CategoryServices.update(req.params.id,name, description,files[0]);
         return parseHelper(res, 200, category, "updated successfully");
     } catch (err) {
         console.log(err);

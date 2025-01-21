@@ -20,8 +20,9 @@ const remove = async (id) => {
 }
 
 
-const update = async (id, name, description) => {
-    const category = await CategoryModel.findByIdAndUpdate(id, { name, description }, { new: true });
+const update = async (id, name, description, image) => {
+    const { url } = await saveFileToCloudinary(image.buffer);
+    const category = await CategoryModel.findByIdAndUpdate(id, { name, description, image:url }, { new: true });
     if (!category) throw new Error("Category not found");
     return category;
 }
