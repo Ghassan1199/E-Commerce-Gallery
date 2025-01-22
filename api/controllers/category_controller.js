@@ -46,10 +46,20 @@ const update = async (req, res) => {
     }
 }
 
+const get = async (req, res) => {
+    try {
+        const category = await CategoryServices.get(req.params.id);
+        return parseHelper(res, 200, category, "returned successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
 
 module.exports = {
     create,
     index,
     remove,
-    update
+    update,
+    get
 };

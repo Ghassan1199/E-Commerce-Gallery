@@ -34,9 +34,16 @@ const update = async (id, name, description, image) => {
     return category;
 }
 
+const get = async (id) => {
+    const category = await CategoryModel.findById(id);
+    if (!category) throw new Error("Category not found");
+    return category;
+}
+
 module.exports = {
     create,
     index,
     remove,
-    update
+    update,
+    get
 };
