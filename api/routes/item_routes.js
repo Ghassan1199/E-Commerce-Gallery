@@ -42,21 +42,11 @@ const itemRouter = express.Router();
  *                 format: float
  *                 description: The discount on the item (optional)
  *               main_category_id:
- *                 type: object
- *                 properties:
- *                   _id:
- *                     type: string
- *                     description: The ID of the main category the item belongs to
- *                   name:
- *                     type: string
- *                     description: The name of the main category
- *                   description:
- *                     type: string
- *                     description: A description of the main category
- *                   createdAt:
- *                     type: string
- *                     format: date-time
- *                     description: The creation date of the main category
+ *                 type: string
+ *                 description: The ID of the main category the item belongs to
+ *               sub_category_id:
+ *                 type: string
+ *                 description: The ID of the sub category the item belongs to
  *               files:
  *                 type: array
  *                 items:
@@ -106,6 +96,10 @@ const itemRouter = express.Router();
  *                     type: string
  *                     format: date-time
  *                     description: The creation date of the main category
+ *               sub_category_id:
+ *                 type: string
+ *                 description: The ID of the sub category
+ *                 properties:
  *               files:
  *                 type: array
  *                 items:
@@ -153,6 +147,15 @@ const itemRouter = express.Router();
  *                     createdAt:
  *                       type: string
  *                       format: date-time
+ *                 sub_category_id:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     description:
+ *                       type: string
  *       400:
  *         description: Bad request, invalid data or file upload error
  *         content:
@@ -248,6 +251,18 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *                           createdAt:
  *                             type: string
  *                             format: date-time
+ *                       sub_category_id:
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                             name:
+ *                               type: string
+ *                             description:
+ *                               type: string
+ *                             createdAt:
+ *                               type: string
+ *                               format: date-time
  *                 cursor:
  *                   type: string
  *                   description: Cursor for the next page of results
@@ -329,6 +344,17 @@ itemRouter.get("/", ItemController.index);
  *                           createdAt:
  *                             type: string
  *                             format: date-time
+ *                       sub_category_id:
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                             name:
+ *                               type: string
+ *                             description:
+ *                               type: string
+ *                             createdAt:
+ *                               type: string
  *       404:
  *         description: Item not found
  *         content:
@@ -421,7 +447,7 @@ itemRouter.delete("/:id", ItemController.remove);
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+ *                 _id:
  *                   type: string
  *                 name:
  *                   type: string
@@ -429,6 +455,35 @@ itemRouter.delete("/:id", ItemController.remove);
  *                   type: string
  *                 description:
  *                   type: string
+ *                 price:
+ *                   type: number
+ *                 discount:
+ *                   type: number
+ *                 images:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 sub_category_id:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     description:
+ *                       type: string
+ *                 main_category_id:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     description:
+ *                       type: string
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
  *       400:
  *         description: Bad request
  *         content:
@@ -440,7 +495,6 @@ itemRouter.delete("/:id", ItemController.remove);
  *                   type: string
  */
 itemRouter.put("/:id", ItemController.update);
-
 
 /**
  * @openapi
@@ -485,7 +539,7 @@ itemRouter.put("/:id", ItemController.update);
  *                   type: string
  *                   description: Error message describing the issue
  */
-itemRouter.delete('/:item_id/:index',ItemController.remove_item_photo);
+itemRouter.delete('/:item_id/:index', ItemController.remove_item_photo);
 
 /**
  * @openapi
@@ -523,17 +577,43 @@ itemRouter.delete('/:item_id/:index',ItemController.remove_item_photo);
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+*                 _id:
  *                   type: string
- *                   description: The ID of the item
- *                 photos:
+ *                 name:
+ *                   type: string
+ *                 ar_name:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 price:
+ *                   type: number
+ *                 discount:
+ *                   type: number
+ *                 images:
  *                   type: array
  *                   items:
  *                     type: string
- *                   description: The list of photo URLs associated with the item
- *                 message:
- *                   type: string
- *                   description: Success message
+ *                 sub_category_id:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     description:
+ *                       type: string
+ *                 main_category_id:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     description:
+ *                       type: string
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
  *       400:
  *         description: Bad request, invalid data or file upload error
  *         content:
