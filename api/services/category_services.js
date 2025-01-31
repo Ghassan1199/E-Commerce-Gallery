@@ -1,4 +1,5 @@
 const CategoryModel = require('../models/category_model');
+const SubCategoryModel = require('../models/sub_category_model');
 const { saveFileToCloudinary } = require('../helpers/file_helpers');
 
 const create = async (name, description, image) => {
@@ -15,6 +16,7 @@ const index = async () => {
 
 const remove = async (id) => {
     const category = await CategoryModel.findByIdAndDelete(id);
+    await SubCategoryModel.deleteMany({ main_category_id: id });
     if (!category) throw new Error("Category not found");
     return category;
 }
