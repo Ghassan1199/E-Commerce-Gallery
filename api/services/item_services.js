@@ -67,7 +67,6 @@ const update = async (id, name, ar_name, description, price, discount, sub_categ
     item.main_category_id = main_category_id || item.main_category_id;
     item.discount = discount || item.discount;
     item.ar_name = ar_name || item.ar_name;
-
     await item.save();
 
     return item;
