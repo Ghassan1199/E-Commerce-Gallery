@@ -91,6 +91,16 @@ const update_facebook = async (req, res) => {
         return parseHelper(res, 400, null, err);
     }
 }
+const update_whatsapp_channel = async (req, res) => {
+    try {
+        const { whatsapp_channel } = req.body;
+        const settings = await settingsServices.update_whatsapp_channel(whatsapp_channel);
+        return parseHelper(res, 200, settings, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+}
 
 const update_instagram = async (req, res) => {
     try {
@@ -126,20 +136,20 @@ const update_telegram = async (req, res) => {
     }
 }
 
-const add_whataspp_account = async (req, res) => {
+const add_whatsapp_account = async (req, res) => {
     try {
         const { link, phone_number, name } = req.body;
-        const settings = await settingsServices.add_whataspp_account(link, phone_number, name);
-        return parseHelper(res, 201, settings, "addedd successfully");
+        const settings = await settingsServices.add_whatsapp_account(link, phone_number, name);
+        return parseHelper(res, 201, settings, "added successfully");
     } catch (err) {
         console.log(err);
         return parseHelper(res, 400, null, err);
     }
 }
 
-const remove_whataspp_account = async (req, res) => {
+const remove_whatsapp_account = async (req, res) => {
     try {
-        const settings = await settingsServices.remove_whataspp_account(req.params.index);
+        const settings = await settingsServices.remove_whatsapp_account(req.params.index);
         return parseHelper(res, 204, settings, "deleted successfully");
     } catch (err) {
         console.log(err);
@@ -160,8 +170,9 @@ module.exports = {
     update_facebook,
     update_instagram,
     update_telegram,
-    add_whataspp_account,
-    remove_whataspp_account,
+    add_whatsapp_account,
+    remove_whatsapp_account,
     edit_hero_photos,
-    update_youtube
+    update_youtube,
+    update_whatsapp_channel
 };

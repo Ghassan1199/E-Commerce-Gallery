@@ -52,6 +52,9 @@ const busboy = require("../middlewares/busboy_middleware");
  *                         facebook:
  *                           type: string
  *                           example: "https://facebook.com/example"
+ *                         whatsapp_channel:
+ *                           type: string
+ *                           example: "https://whatsapp.com/example"
  *                         whatsapp:
  *                           type: array
  *                           items:
@@ -725,7 +728,6 @@ settingsRouter.put("/facebook", settingsController.update_facebook);
  */
 settingsRouter.put("/youtube", settingsController.update_youtube);
 
-
 /**
  * @openapi
  * /settings/instagram:
@@ -740,7 +742,7 @@ settingsRouter.put("/youtube", settingsController.update_youtube);
  *           schema:
  *             type: object
  *             properties:
- *               facebook:
+ *               instagram:
  *                 type: string
  *                 example: "This is the updated instagram section."
  *             required:
@@ -839,11 +841,111 @@ settingsRouter.put("/instagram", settingsController.update_instagram);
  *           schema:
  *             type: object
  *             properties:
- *               facebook:
+ *               telegram:
  *                 type: string
  *                 example: "This is the updated telegram section."
  *             required:
  *               - telegram
+ *     responses:
+ *       200:
+ *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "67838759c886a879a8ffc617"
+ *                     dollar_price:
+ *                       type: number
+ *                       example: 15000
+ *                     about_us:
+ *                       type: string
+ *                       example: "This is the updated about_us section."
+ *                     hero:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "http://res.cloudinary.com/dq8n2cyzw/image/upload/v1736676062/nrjwurjsofmwqgcn5ts4.png"
+ *                     social_media:
+ *                       type: object
+ *                       properties:
+ *                         facebook:
+ *                           type: string
+ *                           example: "https://facebook.com/example"
+ *                         whatsapp_channel:
+ *                           type: string
+ *                           example: "https://whatsapp.com/example"
+ *                         whatsapp:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               link:
+ *                                 type: string
+ *                                 example: "https://wa.me/123456789"
+ *                               phone_number:
+ *                                 type: number
+ *                                 example: 123456789
+ *                               name:
+ *                                 type: string
+ *                                 example: "Customer Support"
+ *                         telegram:
+ *                           type: string
+ *                           example: "https://t.me/example"
+ *                         instagram:
+ *                           type: string
+ *                           example: "https://instagram.com/example"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-01-12T09:11:53.993Z"
+ *                 message:
+ *                   type: string
+ *                   example: "Updated successfully."
+ *       400:
+ *         description: Bad request due to invalid data or missing required fields.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid input or required field missing."
+ */
+settingsRouter.put("/telegram", settingsController.update_telegram);
+
+
+/**
+ * @openapi
+ * /settings/whatsapp_channel:
+ *   put:
+ *     summary: Update the whatsapp_channel section in settings
+ *     tags:
+ *       - Settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               whatsapp_channel:
+ *                 type: string
+ *                 example: "This is the updated telegram section."
+ *             required:
+ *               - whatsapp_channel
  *     responses:
  *       200:
  *         description: Settings updated successfully
@@ -898,6 +1000,9 @@ settingsRouter.put("/instagram", settingsController.update_instagram);
  *                         instagram:
  *                           type: string
  *                           example: "https://instagram.com/example"
+ *                         whatsapp_channel:
+ *                           type: string
+ *                           example: "https://whatsapp.com/channel"
  *                     createdAt:
  *                       type: string
  *                       format: date-time
@@ -919,7 +1024,8 @@ settingsRouter.put("/instagram", settingsController.update_instagram);
  *                   type: string
  *                   example: "Invalid input or required field missing."
  */
-settingsRouter.put("/telegram", settingsController.update_telegram);
+settingsRouter.put("/whatsapp_channel", settingsController.update_whatsapp_channel);
+
 
 /**
  * @openapi
@@ -1010,7 +1116,7 @@ settingsRouter.put("/telegram", settingsController.update_telegram);
  *                   type: string
  *                   example: "Invalid input or server error."
  */
-settingsRouter.post("/whatsapp", settingsController.add_whataspp_account);
+settingsRouter.post("/whatsapp", settingsController.add_whatsapp_account);
 
 /**
  * @openapi
@@ -1057,7 +1163,7 @@ settingsRouter.post("/whatsapp", settingsController.add_whataspp_account);
  *                   type: string
  *                   example: "Internal server error."
  */
-settingsRouter.delete("/whatsapp/:index", settingsController.remove_whataspp_account);
+settingsRouter.delete("/whatsapp/:index", settingsController.remove_whatsapp_account);
 
 
 
