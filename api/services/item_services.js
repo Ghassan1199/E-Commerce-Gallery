@@ -3,8 +3,7 @@ const { saveFileToCloudinary, deleteFileFromCloudinary } = require("../helpers/f
 const ItemModel = require("../models/item_model");
 
 const create = async (name, ar_name, description, price, discount, images, sub_category_id, main_category_id) => {
-    const item = await new itemModel({ name, ar_name, price, discount, description, sub_category_id, main_category_id });
-
+    const item = new itemModel({ name, ar_name, price, discount, description, sub_category_id, main_category_id });
     for (const image in images) {
         const { url } = await saveFileToCloudinary(images[image].buffer);
         item.images.push(url);
@@ -13,7 +12,7 @@ const create = async (name, ar_name, description, price, discount, images, sub_c
     return item;
 }
 
-const index = async (main_category_id, sub_category_id, max_price, min_price, cursor, limit) => {
+const index = async (main_category_id, sub_category_id, max_price, min_price, discount, cursor, limit) => {
 
     const filter = {};
 
@@ -32,8 +31,15 @@ const index = async (main_category_id, sub_category_id, max_price, min_price, cu
     if (cursor) {
         filter._id = { $gt: cursor };
     }
+    if (discount == 1) {
+        filter.discount = { ...filter.discount, $gt: 0 };
+    }
+    if (discount == 0) {
+        filter.discount = { ...filter.discount, $lte: 0 };
+    }
 
-    return itemModel.find(filter)
+
+    return await itemModel.find(filter)
         .limit(limit)
         .populate('main_category_id')
         .populate('sub_category_id');

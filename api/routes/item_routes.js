@@ -157,6 +157,11 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *         schema:
  *           type: number
  *           format: float
+ *       - name: discount
+ *         in: query
+ *         description: Discount 
+ *         schema:
+ *           type: boolean
  *       - name: cursor
  *         in: query
  *         description: Cursor for pagination, representing the last item's ID from the previous page
