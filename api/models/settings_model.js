@@ -34,6 +34,10 @@ const SocialMediaSchema = new mongoose.Schema({
     youtube: {
         type: String,
         default: "youtube"
+    },
+    whatsapp_channel: {
+        type: String,
+        default: "whatsapp channel"
     }
 }, { _id: false });
 

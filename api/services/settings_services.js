@@ -76,6 +76,14 @@ const update_youtube = async (youtube) => {
     return settings;
 }
 
+const update_whatsapp_channel = async (whatsapp_channel) => {
+    settings = await SettingsModel.findOne();
+    if (!settings)
+        settings = new SettingsModel.create()
+    settings.social_media.whatsapp_channel = whatsapp_channel;
+    settings.save();
+    return settings;
+}
 const update_instagram = async (instagram) => {
     settings = await SettingsModel.findOne();
     if (!settings)
@@ -94,7 +102,7 @@ const update_telegram = async (telegram) => {
     return settings;
 }
 
-const add_whataspp_account = async (link, phone_number, name) => {
+const add_whatsapp_account = async (link, phone_number, name) => {
     settings = await SettingsModel.findOne();
     if (!settings)
         settings = new SettingsModel.create()
@@ -106,9 +114,9 @@ const add_whataspp_account = async (link, phone_number, name) => {
     return settings;
 }
 
-const remove_whataspp_account = async (index) => {
+const remove_whatsapp_account = async (index) => {
     settings = await SettingsModel.findOne();
-    if(!settings.social_media.whatsapp[index]) throw new Error("whatsapp account not found")
+    if (!settings.social_media.whatsapp[index]) throw new Error("whatsapp account not found")
     settings.social_media.whatsapp.splice(index, 1);
     settings.save();
     return settings;
@@ -124,8 +132,9 @@ module.exports = {
     update_facebook,
     update_instagram,
     update_telegram,
-    add_whataspp_account,
-    remove_whataspp_account,
+    add_whatsapp_account,
+    remove_whatsapp_account,
     edit_hero_photos,
-    update_youtube
+    update_youtube,
+    update_whatsapp_channel
 };
