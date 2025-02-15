@@ -2,6 +2,7 @@ const express = require("express");
 const faqController = require("../controllers/faq_controller.js");
 const faqRouter = express.Router();
 const busboy = require("../middlewares/busboy_middleware");
+const auth = require("../middlewares/admin_auth.js")
 
 /**
  * @openapi
@@ -84,7 +85,7 @@ const busboy = require("../middlewares/busboy_middleware");
  *                   type: string
  *                   description: Error message describing the issue
  */
-faqRouter.post('/', busboy.bus, faqController.create);
+faqRouter.post('/', auth.is_admin, busboy.bus, faqController.create);
 
 /**
  * @openapi
