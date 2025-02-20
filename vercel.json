@@ -12,11 +12,6 @@
       "dest": "index.js"
     }
   ],
-  "functions": {
-    "**/*.js": {
-      "maxDuration": 60
-    }
-  },
   "git": {
     "deploymentEnabled": {
       "main": true,
