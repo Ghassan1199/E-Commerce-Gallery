@@ -3,8 +3,8 @@ const parseHelper = require("../helpers/response_helper");
 
 const create = async (req, res) => {
     try {
-        const { name, ar_name, description, price, discount, sub_category_id, main_category_id, files, } = req.body;
-        const item = await ItemServices.create(name, ar_name, description, price, discount, files, sub_category_id, main_category_id);
+        const { name, ar_name, description, price, discount, sub_category_id, main_category_id, files, is_hidden } = req.body;
+        const item = await ItemServices.create(name, ar_name, description, price, discount, files, sub_category_id, main_category_id, is_hidden);
         return parseHelper(res, 201, item, "created successfully");
     } catch (err) {
         console.log(err);
@@ -12,10 +12,21 @@ const create = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const { name, ar_name, description, price, discount, sub_category_id, main_category_id, is_hidden } = req.body;
+        const item = await ItemServices.update(req.params.id, name, ar_name, description, price, discount, sub_category_id, main_category_id, is_hidden);
+        return parseHelper(res, 200, item, "updated successfully");
+    } catch (err) {
+        console.log(err);
+        return parseHelper(res, 400, null, err);
+    }
+};
+
 const index = async (req, res) => {
     try {
-        const { main_category_id, sub_category_id, max_price, min_price, cursor, limit, discount } = req.query;
-        const items = await ItemServices.index(main_category_id, sub_category_id, max_price, min_price, discount, cursor, limit);
+        const { main_category_id, sub_category_id, max_price, min_price, cursor, limit, discount, include_hidden } = req.query;
+        const items = await ItemServices.index(main_category_id, sub_category_id, max_price, min_price, discount, cursor, limit, include_hidden === 'true');
         if (!items.length) throw new Error("There is no items found");
         return parseHelper(res, 200, { items: items, cursor: items[items.length - 1]._id }, "returned successfully");
     } catch (err) {
@@ -36,16 +47,6 @@ const remove = async (req, res) => {
     }
 }
 
-const update = async (req, res) => {
-    try {
-        const { name, ar_name, description, price, discount, sub_category_id, main_category_id, files } = req.body;
-        const item = await ItemServices.update(req.params.id, name, ar_name, description, price, discount, sub_category_id, main_category_id);
-        return parseHelper(res, 200, item, "updated successfully");
-    } catch (err) {
-        console.log(err);
-        return parseHelper(res, 400, null, err);
-    }
-};
 
 const get = async (req, res) => {
     try {

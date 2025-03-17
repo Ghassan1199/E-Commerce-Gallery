@@ -41,6 +41,9 @@ const itemRouter = express.Router();
  *                 type: number
  *                 format: float
  *                 description: The discount on the item (optional)
+ *               is_hidden:
+ *                 type: boolean
+ *                 description: Whether the item should be hidden from regular listings
  *               main_category_id:
  *                 type: string
  *                 description: The ID of the main category the item belongs to
@@ -81,6 +84,8 @@ const itemRouter = express.Router();
  *                       type: number
  *                     discount:
  *                       type: number
+ *                     is_hidden:
+ *                       type: boolean
  *                     images:
  *                       type: array
  *                       items:
@@ -163,6 +168,12 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *         schema:
  *           type: integer
  *           enum: [0, 1]
+ *       - name: include_hidden
+ *         in: query
+ *         description: Whether to include hidden items in the results
+ *         schema:
+ *           type: boolean
+ *           default: false
  *       - name: cursor
  *         in: query
  *         description: Cursor for pagination, representing the last item's ID from the previous page
@@ -204,6 +215,8 @@ itemRouter.post('/', busboy.bus, ItemController.create);
  *                             type: number
  *                           discount:
  *                             type: number
+ *                           is_hidden:
+ *                             type: boolean
  *                           images:
  *                             type: array
  *                             items:
@@ -423,6 +436,9 @@ itemRouter.delete("/:id", ItemController.remove);
  *                  type: number
  *                  format: float
  *                  description: The discount of the item
+ *               is_hidden:
+ *                  type: boolean
+ *                  description: Whether the item should be hidden from regular listings
  *               sub_category_id:
  *                 type: string
  *                 description: The ID of the sub-category the item belongs to
@@ -455,6 +471,8 @@ itemRouter.delete("/:id", ItemController.remove);
  *                       type: number
  *                     discount:
  *                       type: number
+ *                     is_hidden:
+ *                       type: boolean
  *                     images:
  *                       type: array
  *                       items:
