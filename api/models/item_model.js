@@ -38,7 +38,10 @@ const ItemSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-
+    is_hidden: {
+        type: Boolean,
+        default: false
+    },
 }, {
     toJSON: {
         transform: function (doc, ret) {

@@ -2,8 +2,9 @@ const itemModel = require('../models/item_model');
 const { saveFileToCloudinary, deleteFileFromCloudinary } = require("../helpers/file_helpers");
 const ItemModel = require("../models/item_model");
 
-const create = async (name, ar_name, description, price, discount, images, sub_category_id, main_category_id) => {
-    const item = new itemModel({ name, ar_name, price, discount, description, sub_category_id, main_category_id });
+// Modify the create function
+const create = async (name, ar_name, description, price, discount, images, sub_category_id, main_category_id, is_hidden = false) => {
+    const item = new itemModel({ name, ar_name, price, discount, description, sub_category_id, main_category_id, is_hidden });
     for (const image in images) {
         const { url } = await saveFileToCloudinary(images[image].buffer);
         item.images.push(url);
@@ -12,10 +13,48 @@ const create = async (name, ar_name, description, price, discount, images, sub_c
     return item;
 }
 
-const index = async (main_category_id, sub_category_id, max_price, min_price, discount, cursor, limit) => {
 
+const remove = async (id) => {
+    const item = await ItemModel.findByIdAndDelete(id);
+    if (!item) throw new Error("Item not found");
+    for (const image of item.images) {
+        await deleteFileFromCloudinary(image);
+    }
+    return item;
+}
+
+const getById = async (id) => {
+    return ItemModel.findById(id)
+        .populate('main_category_id')
+        .populate('sub_category_id');
+}
+
+
+// Modify the update function
+const update = async (id, name, ar_name, description, price, discount, sub_category_id, main_category_id, is_hidden) => {
+    const item = await itemModel.findById(id);
+    if (!item) throw new Error("Item not found");
+
+    item.name = name || item.name;
+    item.description = description || item.description;
+    item.price = price || item.price;
+    item.sub_category_id = sub_category_id || item.sub_category_id;
+    item.main_category_id = main_category_id || item.main_category_id;
+    item.discount = discount || item.discount;
+    item.ar_name = ar_name || item.ar_name;
+    item.is_hidden = is_hidden !== undefined ? is_hidden : item.is_hidden;
+    await item.save();
+
+    return item;
+};
+
+// Modify the index function to filter out hidden items by default
+const index = async (main_category_id, sub_category_id, max_price, min_price, discount, cursor, limit, include_hidden = false) => {
     const filter = {};
-
+    
+    if (!include_hidden) {
+        filter.is_hidden = false;
+    }
     if (main_category_id) {
         filter.main_category_id = main_category_id;
     }
@@ -43,39 +82,6 @@ const index = async (main_category_id, sub_category_id, max_price, min_price, di
         .limit(limit)
         .populate('main_category_id')
         .populate('sub_category_id');
-};
-
-const remove = async (id) => {
-    const item = await ItemModel.findByIdAndDelete(id);
-    if (!item) throw new Error("Item not found");
-    for (const image of item.images) {
-        await deleteFileFromCloudinary(image);
-    }
-    return item;
-}
-
-const getById = async (id) => {
-    return ItemModel.findById(id)
-        .populate('main_category_id')
-        .populate('sub_category_id');
-}
-
-
-const update = async (id, name, ar_name, description, price, discount, sub_category_id, main_category_id) => {
-
-    const item = await itemModel.findById(id);
-    if (!item) throw new Error("Item not found");
-
-    item.name = name || item.name;
-    item.description = description || item.description;
-    item.price = price || item.price;
-    item.sub_category_id = sub_category_id || item.sub_category_id;
-    item.main_category_id = main_category_id || item.main_category_id;
-    item.discount = discount || item.discount;
-    item.ar_name = ar_name || item.ar_name;
-    await item.save();
-
-    return item;
 };
 
 const add_item_photo = async (item_id, images) => {
