@@ -178,7 +178,7 @@ faqRouter.get('/', faqController.index);
  *                   type: string
  *                   description: Error message describing the issue
  */
-faqRouter.delete('/:faq_id/', faqController.remove);
+faqRouter.delete('/:faq_id/', auth.is_admin, faqController.remove);
 
 /**
  * @openapi
@@ -326,7 +326,7 @@ faqRouter.get('/:faq_id/', faqController.get);
  *                   type: string
  *                   description: Error message describing the issue
  */
-faqRouter.put('/:faq_id/:index', busboy.bus, faqController.edit_faq_photo);
+faqRouter.put('/:faq_id/:index', auth.is_admin, busboy.bus, faqController.edit_faq_photo);
 
 /**
  * @openapi
@@ -371,7 +371,7 @@ faqRouter.put('/:faq_id/:index', busboy.bus, faqController.edit_faq_photo);
  *                   type: string
  *                   description: Error message describing the issue
  */
-faqRouter.delete('/:faq_id/:index', faqController.remove_faq_photo);
+faqRouter.delete('/:faq_id/:index', auth.is_admin, faqController.remove_faq_photo);
 
 /**
  * @openapi
@@ -454,7 +454,7 @@ faqRouter.delete('/:faq_id/:index', faqController.remove_faq_photo);
  *                   type: string
  *                   description: Error message describing the issue
  */
-faqRouter.post('/:faq_id/', busboy.bus, faqController.add_faq_photo);
+faqRouter.post('/:faq_id/', auth.is_admin, busboy.bus, faqController.add_faq_photo);
 
 /**
  * @openapi
@@ -538,7 +538,7 @@ faqRouter.post('/:faq_id/', busboy.bus, faqController.add_faq_photo);
  *                   type: string
  *                   description: Error message describing the issue
  */
-faqRouter.put('/:faq_id/', faqController.update);
+faqRouter.put('/:faq_id/', auth.is_admin, faqController.update);
 
 
 

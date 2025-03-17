@@ -2,6 +2,7 @@ const express = require("express");
 const categoryController = require("../controllers/category_controller.js");
 const categoryRouter = express.Router();
 const busboy = require("../middlewares/busboy_middleware");
+const auth = require("../middlewares/admin_auth.js")
 
 /**
  * @openapi
@@ -60,7 +61,7 @@ const busboy = require("../middlewares/busboy_middleware");
  *                 message:
  *                   type: string
  */
-categoryRouter.post('/', busboy.bus, categoryController.create);
+categoryRouter.post('/',auth.is_admin, busboy.bus, categoryController.create);
 
 /**
  * @openapi
@@ -150,7 +151,7 @@ categoryRouter.get("/", categoryController.index);
  *                 message:
  *                   type: string
  */
-categoryRouter.delete("/:id", categoryController.remove);
+categoryRouter.delete("/:id", auth.is_admin,categoryController.remove);
 
 /**
  * @openapi
@@ -204,7 +205,7 @@ categoryRouter.delete("/:id", categoryController.remove);
  *                 message:
  *                   type: string
  */
-categoryRouter.put("/:id", busboy.bus, categoryController.update);
+categoryRouter.put("/:id",auth.is_admin, busboy.bus, categoryController.update);
 
 
 /**

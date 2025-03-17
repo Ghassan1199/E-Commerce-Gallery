@@ -15,8 +15,10 @@ const is_admin = (req, res, next) => {
 
     } catch (err) {
         if (err.message.includes("you are not allowed to do this action"))
-            parseHelper(res, 401, null, err.message);
-        parseHelper(res, 400, null, err.message);
+            return parseHelper(res, 401, null, err.message);
+        if (err.message.includes("Token not found"))
+            return parseHelper(res, 403, null, err.message);
+        return parseHelper(res, 400, null, err.message);
     }
 }
 

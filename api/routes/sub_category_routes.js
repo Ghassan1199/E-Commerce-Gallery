@@ -1,6 +1,8 @@
 const express = require("express");
 const subCategoryController = require("../controllers/sub_category_controller.js");
 const subCategoryRouter = express.Router();
+const auth = require("../middlewares/admin_auth.js")
+
 /**
  * @swagger
  * tags:
@@ -49,7 +51,7 @@ const subCategoryRouter = express.Router();
  *       400:
  *         description: Invalid input or server error
  */
-subCategoryRouter.post('/', subCategoryController.create);
+subCategoryRouter.post('/', auth.is_admin, subCategoryController.create);
 
 /**
  * @swagger
@@ -108,7 +110,7 @@ subCategoryRouter.get("/", subCategoryController.index);
  *       400:
  *         description: Sub-category not found or server error
  */
-subCategoryRouter.delete("/:id", subCategoryController.remove);
+subCategoryRouter.delete("/:id", auth.is_admin, subCategoryController.remove);
 
 /**
  * @swagger
@@ -158,6 +160,6 @@ subCategoryRouter.delete("/:id", subCategoryController.remove);
  *       400:
  *         description: Sub-category not found or invalid input
  */
-subCategoryRouter.put("/:id", subCategoryController.update);
+subCategoryRouter.put("/:id", auth.is_admin, subCategoryController.update);
 
 module.exports = subCategoryRouter;

@@ -1,6 +1,7 @@
 const express = require("express");
 const ItemController = require("../controllers/item_controller.js");
 const busboy = require("../middlewares/busboy_middleware");
+const auth = require("../middlewares/admin_auth.js")
 
 const itemRouter = express.Router();
 
@@ -131,7 +132,7 @@ const itemRouter = express.Router();
  *                 message:
  *                   type: string
  */
-itemRouter.post('/', busboy.bus, ItemController.create);
+itemRouter.post('/', auth.is_admin, busboy.bus, ItemController.create);
 
 /**
  * @openapi
@@ -397,7 +398,7 @@ itemRouter.get("/:id", ItemController.get);
  *                 message:
  *                   type: string
  */
-itemRouter.delete("/:id", ItemController.remove);
+itemRouter.delete("/:id", auth.is_admin, ItemController.remove);
 
 /**
  * @openapi
@@ -518,7 +519,7 @@ itemRouter.delete("/:id", ItemController.remove);
  *                 message:
  *                   type: string
  */
-itemRouter.put("/:id", ItemController.update);
+itemRouter.put("/:id", auth.is_admin, ItemController.update);
 
 /**
  * @openapi
@@ -561,7 +562,7 @@ itemRouter.put("/:id", ItemController.update);
  *                 message:
  *                   type: string
  */
-itemRouter.delete('/:item_id/:index', ItemController.remove_item_photo);
+itemRouter.delete('/:item_id/:index', auth.is_admin, ItemController.remove_item_photo);
 
 /**
  * @openapi
@@ -662,7 +663,7 @@ itemRouter.delete('/:item_id/:index', ItemController.remove_item_photo);
  *                 message:
  *                   type: string
  */
-itemRouter.post('/:item_id', busboy.bus, ItemController.add_item_photo);
+itemRouter.post('/:item_id', auth.is_admin, busboy.bus, ItemController.add_item_photo);
 
 /**
  * @openapi
@@ -769,6 +770,6 @@ itemRouter.post('/:item_id', busboy.bus, ItemController.add_item_photo);
  *                 message:
  *                   type: string
  */
-itemRouter.put('/:item_id/:index', busboy.bus, ItemController.edit_item_photo);
+itemRouter.put('/:item_id/:index', auth.is_admin, busboy.bus, ItemController.edit_item_photo);
 
 module.exports = itemRouter;

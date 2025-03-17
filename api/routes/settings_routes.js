@@ -2,6 +2,7 @@ const express = require("express");
 const settingsController = require("../controllers/settings_controller.js");
 const settingsRouter = express.Router();
 const busboy = require("../middlewares/busboy_middleware");
+const auth = require("../middlewares/admin_auth.js")
 
 /**
  * @openapi
@@ -184,7 +185,7 @@ settingsRouter.get("/", settingsController.get);
  *                   type: string
  *                   example: "Invalid input"
  */
-settingsRouter.put("/dollar", settingsController.update_dollar_price);
+settingsRouter.put("/dollar", auth.is_admin, settingsController.update_dollar_price);
 
 /**
  * @openapi
@@ -282,7 +283,7 @@ settingsRouter.put("/dollar", settingsController.update_dollar_price);
  *                   type: string
  *                   example: Invalid input or server error.
  */
-settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
+settingsRouter.post("/hero", auth.is_admin, busboy.bus, settingsController.add_hero_photo);
 
 /**
  * @openapi
@@ -388,7 +389,7 @@ settingsRouter.post("/hero", busboy.bus, settingsController.add_hero_photo);
  *                   type: string
  *                   example: Invalid input or server error.
  */
-settingsRouter.put("/hero/:index", busboy.bus, settingsController.edit_hero_photos);
+settingsRouter.put("/hero/:index", auth.is_admin, busboy.bus, settingsController.edit_hero_photos);
 
 /**
  * @openapi
@@ -435,7 +436,7 @@ settingsRouter.put("/hero/:index", busboy.bus, settingsController.edit_hero_phot
  *                   type: string
  *                   example: "Internal server error."
  */
-settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
+settingsRouter.delete("/hero/:index", auth.is_admin, settingsController.remove_hero_photo)
 
 /**
  * @openapi
@@ -531,7 +532,7 @@ settingsRouter.delete("/hero/:index", settingsController.remove_hero_photo)
  *                   type: string
  *                   example: "Invalid input or required field missing."
  */
-settingsRouter.put("/about_us", settingsController.update_about_us);
+settingsRouter.put("/about_us", auth.is_admin, settingsController.update_about_us);
 
 /**
  * @openapi
@@ -627,7 +628,7 @@ settingsRouter.put("/about_us", settingsController.update_about_us);
  *                   type: string
  *                   example: "Invalid input or required field missing."
  */
-settingsRouter.put("/facebook", settingsController.update_facebook);
+settingsRouter.put("/facebook", auth.is_admin, settingsController.update_facebook);
 
 /**
  * @openapi
@@ -726,7 +727,7 @@ settingsRouter.put("/facebook", settingsController.update_facebook);
  *                   type: string
  *                   example: "Invalid input or required field missing."
  */
-settingsRouter.put("/youtube", settingsController.update_youtube);
+settingsRouter.put("/youtube", auth.is_admin, settingsController.update_youtube);
 
 /**
  * @openapi
@@ -825,7 +826,7 @@ settingsRouter.put("/youtube", settingsController.update_youtube);
  *                   type: string
  *                   example: "Invalid input or required field missing."
  */
-settingsRouter.put("/instagram", settingsController.update_instagram);
+settingsRouter.put("/instagram", auth.is_admin, settingsController.update_instagram);
 
 /**
  * @openapi
@@ -924,7 +925,7 @@ settingsRouter.put("/instagram", settingsController.update_instagram);
  *                   type: string
  *                   example: "Invalid input or required field missing."
  */
-settingsRouter.put("/telegram", settingsController.update_telegram);
+settingsRouter.put("/telegram", auth.is_admin, settingsController.update_telegram);
 
 
 /**
@@ -1024,7 +1025,7 @@ settingsRouter.put("/telegram", settingsController.update_telegram);
  *                   type: string
  *                   example: "Invalid input or required field missing."
  */
-settingsRouter.put("/whatsapp_channel", settingsController.update_whatsapp_channel);
+settingsRouter.put("/whatsapp_channel", auth.is_admin, settingsController.update_whatsapp_channel);
 
 
 /**
@@ -1116,7 +1117,7 @@ settingsRouter.put("/whatsapp_channel", settingsController.update_whatsapp_chann
  *                   type: string
  *                   example: "Invalid input or server error."
  */
-settingsRouter.post("/whatsapp", settingsController.add_whatsapp_account);
+settingsRouter.post("/whatsapp", auth.is_admin, settingsController.add_whatsapp_account);
 
 /**
  * @openapi
@@ -1163,7 +1164,7 @@ settingsRouter.post("/whatsapp", settingsController.add_whatsapp_account);
  *                   type: string
  *                   example: "Internal server error."
  */
-settingsRouter.delete("/whatsapp/:index", settingsController.remove_whatsapp_account);
+settingsRouter.delete("/whatsapp/:index", auth.is_admin, settingsController.remove_whatsapp_account);
 
 
 
