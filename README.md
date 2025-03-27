@@ -1,6 +1,6 @@
 ## Overview
 
-This project is a backend server built using Node.js and Express, designed for Vapo Store. The backend provides various functionalities such as user authentication, product management, order processing, and file uploads, deployed on Vercel as a serverless function.
+This project is a backend server built using Node.js and Express for an E-Commerce Gallery. The backend provides various functionalities such as user authentication, product management, order processing, and file uploads, deployed on Vercel as a serverless function.
 
 ## Features
 
